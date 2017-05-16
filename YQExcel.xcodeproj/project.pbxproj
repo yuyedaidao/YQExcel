@@ -1,0 +1,541 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		21D965AE1ECA9C27005162BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965AD1ECA9C27005162BE /* main.m */; };
+		21D965B11ECA9C27005162BE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965B01ECA9C27005162BE /* AppDelegate.m */; };
+		21D965B41ECA9C28005162BE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965B31ECA9C28005162BE /* ViewController.m */; };
+		21D965B71ECA9C28005162BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21D965B51ECA9C28005162BE /* Main.storyboard */; };
+		21D965B91ECA9C29005162BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21D965B81ECA9C29005162BE /* Assets.xcassets */; };
+		21D965BC1ECA9C29005162BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21D965BA1ECA9C29005162BE /* LaunchScreen.storyboard */; };
+		21D965C71ECA9C2D005162BE /* YQExcelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965C61ECA9C2D005162BE /* YQExcelTests.m */; };
+		21D965D21ECA9C2D005162BE /* YQExcelUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965D11ECA9C2D005162BE /* YQExcelUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		21D965C31ECA9C2C005162BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 21D965A11ECA9C26005162BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 21D965A81ECA9C27005162BE;
+			remoteInfo = YQExcel;
+		};
+		21D965CE1ECA9C2D005162BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 21D965A11ECA9C26005162BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 21D965A81ECA9C27005162BE;
+			remoteInfo = YQExcel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		21D965A91ECA9C27005162BE /* YQExcel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YQExcel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		21D965AD1ECA9C27005162BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		21D965AF1ECA9C27005162BE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		21D965B01ECA9C27005162BE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		21D965B21ECA9C27005162BE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		21D965B31ECA9C28005162BE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		21D965B61ECA9C28005162BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		21D965B81ECA9C29005162BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		21D965BB1ECA9C29005162BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		21D965BD1ECA9C29005162BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21D965C21ECA9C2C005162BE /* YQExcelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YQExcelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		21D965C61ECA9C2D005162BE /* YQExcelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YQExcelTests.m; sourceTree = "<group>"; };
+		21D965C81ECA9C2D005162BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21D965CD1ECA9C2D005162BE /* YQExcelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YQExcelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		21D965D11ECA9C2D005162BE /* YQExcelUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YQExcelUITests.m; sourceTree = "<group>"; };
+		21D965D31ECA9C2D005162BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		21D965A61ECA9C27005162BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21D965BF1ECA9C2C005162BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21D965CA1ECA9C2D005162BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		21D965A01ECA9C26005162BE = {
+			isa = PBXGroup;
+			children = (
+				21D965AB1ECA9C27005162BE /* YQExcel */,
+				21D965C51ECA9C2C005162BE /* YQExcelTests */,
+				21D965D01ECA9C2D005162BE /* YQExcelUITests */,
+				21D965AA1ECA9C27005162BE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		21D965AA1ECA9C27005162BE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				21D965A91ECA9C27005162BE /* YQExcel.app */,
+				21D965C21ECA9C2C005162BE /* YQExcelTests.xctest */,
+				21D965CD1ECA9C2D005162BE /* YQExcelUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		21D965AB1ECA9C27005162BE /* YQExcel */ = {
+			isa = PBXGroup;
+			children = (
+				21D965AF1ECA9C27005162BE /* AppDelegate.h */,
+				21D965B01ECA9C27005162BE /* AppDelegate.m */,
+				21D965B21ECA9C27005162BE /* ViewController.h */,
+				21D965B31ECA9C28005162BE /* ViewController.m */,
+				21D965B51ECA9C28005162BE /* Main.storyboard */,
+				21D965B81ECA9C29005162BE /* Assets.xcassets */,
+				21D965BA1ECA9C29005162BE /* LaunchScreen.storyboard */,
+				21D965BD1ECA9C29005162BE /* Info.plist */,
+				21D965AC1ECA9C27005162BE /* Supporting Files */,
+			);
+			path = YQExcel;
+			sourceTree = "<group>";
+		};
+		21D965AC1ECA9C27005162BE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				21D965AD1ECA9C27005162BE /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		21D965C51ECA9C2C005162BE /* YQExcelTests */ = {
+			isa = PBXGroup;
+			children = (
+				21D965C61ECA9C2D005162BE /* YQExcelTests.m */,
+				21D965C81ECA9C2D005162BE /* Info.plist */,
+			);
+			path = YQExcelTests;
+			sourceTree = "<group>";
+		};
+		21D965D01ECA9C2D005162BE /* YQExcelUITests */ = {
+			isa = PBXGroup;
+			children = (
+				21D965D11ECA9C2D005162BE /* YQExcelUITests.m */,
+				21D965D31ECA9C2D005162BE /* Info.plist */,
+			);
+			path = YQExcelUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		21D965A81ECA9C27005162BE /* YQExcel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 21D965D61ECA9C2D005162BE /* Build configuration list for PBXNativeTarget "YQExcel" */;
+			buildPhases = (
+				21D965A51ECA9C27005162BE /* Sources */,
+				21D965A61ECA9C27005162BE /* Frameworks */,
+				21D965A71ECA9C27005162BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YQExcel;
+			productName = YQExcel;
+			productReference = 21D965A91ECA9C27005162BE /* YQExcel.app */;
+			productType = "com.apple.product-type.application";
+		};
+		21D965C11ECA9C2C005162BE /* YQExcelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 21D965D91ECA9C2D005162BE /* Build configuration list for PBXNativeTarget "YQExcelTests" */;
+			buildPhases = (
+				21D965BE1ECA9C2C005162BE /* Sources */,
+				21D965BF1ECA9C2C005162BE /* Frameworks */,
+				21D965C01ECA9C2C005162BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				21D965C41ECA9C2C005162BE /* PBXTargetDependency */,
+			);
+			name = YQExcelTests;
+			productName = YQExcelTests;
+			productReference = 21D965C21ECA9C2C005162BE /* YQExcelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		21D965CC1ECA9C2D005162BE /* YQExcelUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 21D965DC1ECA9C2D005162BE /* Build configuration list for PBXNativeTarget "YQExcelUITests" */;
+			buildPhases = (
+				21D965C91ECA9C2D005162BE /* Sources */,
+				21D965CA1ECA9C2D005162BE /* Frameworks */,
+				21D965CB1ECA9C2D005162BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				21D965CF1ECA9C2D005162BE /* PBXTargetDependency */,
+			);
+			name = YQExcelUITests;
+			productName = YQExcelUITests;
+			productReference = 21D965CD1ECA9C2D005162BE /* YQExcelUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		21D965A11ECA9C26005162BE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = Wang;
+				TargetAttributes = {
+					21D965A81ECA9C27005162BE = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = GP4MMMES25;
+						ProvisioningStyle = Automatic;
+					};
+					21D965C11ECA9C2C005162BE = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = GP4MMMES25;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 21D965A81ECA9C27005162BE;
+					};
+					21D965CC1ECA9C2D005162BE = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = GP4MMMES25;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 21D965A81ECA9C27005162BE;
+					};
+				};
+			};
+			buildConfigurationList = 21D965A41ECA9C26005162BE /* Build configuration list for PBXProject "YQExcel" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 21D965A01ECA9C26005162BE;
+			productRefGroup = 21D965AA1ECA9C27005162BE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				21D965A81ECA9C27005162BE /* YQExcel */,
+				21D965C11ECA9C2C005162BE /* YQExcelTests */,
+				21D965CC1ECA9C2D005162BE /* YQExcelUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		21D965A71ECA9C27005162BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21D965BC1ECA9C29005162BE /* LaunchScreen.storyboard in Resources */,
+				21D965B91ECA9C29005162BE /* Assets.xcassets in Resources */,
+				21D965B71ECA9C28005162BE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21D965C01ECA9C2C005162BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21D965CB1ECA9C2D005162BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		21D965A51ECA9C27005162BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21D965B41ECA9C28005162BE /* ViewController.m in Sources */,
+				21D965B11ECA9C27005162BE /* AppDelegate.m in Sources */,
+				21D965AE1ECA9C27005162BE /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21D965BE1ECA9C2C005162BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21D965C71ECA9C2D005162BE /* YQExcelTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		21D965C91ECA9C2D005162BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21D965D21ECA9C2D005162BE /* YQExcelUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		21D965C41ECA9C2C005162BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 21D965A81ECA9C27005162BE /* YQExcel */;
+			targetProxy = 21D965C31ECA9C2C005162BE /* PBXContainerItemProxy */;
+		};
+		21D965CF1ECA9C2D005162BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 21D965A81ECA9C27005162BE /* YQExcel */;
+			targetProxy = 21D965CE1ECA9C2D005162BE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		21D965B51ECA9C28005162BE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				21D965B61ECA9C28005162BE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		21D965BA1ECA9C29005162BE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				21D965BB1ECA9C29005162BE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		21D965D41ECA9C2D005162BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		21D965D51ECA9C2D005162BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		21D965D71ECA9C2D005162BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GP4MMMES25;
+				INFOPLIST_FILE = YQExcel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQExcel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		21D965D81ECA9C2D005162BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GP4MMMES25;
+				INFOPLIST_FILE = YQExcel/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQExcel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		21D965DA1ECA9C2D005162BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = GP4MMMES25;
+				INFOPLIST_FILE = YQExcelTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQExcelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YQExcel.app/YQExcel";
+			};
+			name = Debug;
+		};
+		21D965DB1ECA9C2D005162BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = GP4MMMES25;
+				INFOPLIST_FILE = YQExcelTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQExcelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YQExcel.app/YQExcel";
+			};
+			name = Release;
+		};
+		21D965DD1ECA9C2D005162BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GP4MMMES25;
+				INFOPLIST_FILE = YQExcelUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQExcelUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = YQExcel;
+			};
+			name = Debug;
+		};
+		21D965DE1ECA9C2D005162BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GP4MMMES25;
+				INFOPLIST_FILE = YQExcelUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQExcelUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = YQExcel;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		21D965A41ECA9C26005162BE /* Build configuration list for PBXProject "YQExcel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				21D965D41ECA9C2D005162BE /* Debug */,
+				21D965D51ECA9C2D005162BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		21D965D61ECA9C2D005162BE /* Build configuration list for PBXNativeTarget "YQExcel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				21D965D71ECA9C2D005162BE /* Debug */,
+				21D965D81ECA9C2D005162BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		21D965D91ECA9C2D005162BE /* Build configuration list for PBXNativeTarget "YQExcelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				21D965DA1ECA9C2D005162BE /* Debug */,
+				21D965DB1ECA9C2D005162BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		21D965DC1ECA9C2D005162BE /* Build configuration list for PBXNativeTarget "YQExcelUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				21D965DD1ECA9C2D005162BE /* Debug */,
+				21D965DE1ECA9C2D005162BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 21D965A11ECA9C26005162BE /* Project object */;
+}
