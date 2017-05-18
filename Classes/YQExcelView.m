@@ -11,15 +11,15 @@
 static CGFloat const kVelocity = 10.0f;
 
 @interface YQExcelView () <UICollectionViewDelegate, UICollectionViewDataSource>
+
 @property (strong, nonatomic) YQExcelViewLayout *layout;
 @property (strong, nonatomic) UIView *columnTitleView;
 @property (strong, nonatomic) UIView *rowTitleView;
 @property (strong, nonatomic) UILongPressGestureRecognizer *pressGesture;
-@property (strong, nonatomic) NSTimer *timer;
-@property (strong, nonatomic) CADisplayLink *displayLink;
+@property (strong, nonatomic) YQIndexPath *startIndexPath;
+@property (strong, nonatomic) YQIndexPath *endIndexPath;
 
-@property (assign, nonatomic) CGFloat xVelocityScale;
-@property (assign, nonatomic) CGFloat yVelocityScale;
+@property (strong, nonatomic) NSMutableSet<YQIndexPath *> *coveredIndexPaths;
 
 @end
 
@@ -95,74 +95,61 @@ static CGFloat const kVelocity = 10.0f;
 #pragma mark action
 
 - (void)longPressGestureAction:(UILongPressGestureRecognizer *)gesture {
-    if (gesture.state == UIGestureRecognizerStateBegan) {
-        self.timer = ({
-            NSTimer *timer = [NSTimer timerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
-                CGPoint offset = self.collectionView.contentOffset;
-                
-                if (self.xVelocityScale != 0) {
-                    offset.x += self.xVelocityScale * kVelocity;
-                }
-                if (self.yVelocityScale != 0) {
-                    offset.y += self.yVelocityScale * kVelocity;
-                }
-                self.collectionView.contentOffset = offset;
-            }];
-            [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-            timer;
-        });
-//        [self.timer fire];
-        
-        self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(moveContentAction:)];
-        self.displayLink.frameInterval = 3;
-        [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    }
+  
     CGPoint location = [gesture locationOfTouch:0 inView:self.collectionView];
-    YQIndexPath *indexPath = (YQIndexPath *)[self.collectionView indexPathForItemAtPoint:location];
-    if (indexPath && indexPath.type == IndexPathTypeNormal) {
-        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-        cell.backgroundColor = [UIColor grayColor];
-    }
-    CGPoint offset = self.collectionView.contentOffset;
-    CGFloat deltaX = offset.x + CGRectGetWidth(self.collectionView.bounds) - location.x;
-    CGFloat deltaY = offset.y + CGRectGetHeight(self.collectionView.bounds) - location.y;
-
-    CGFloat gestureMargin = [UIScreen mainScreen].bounds.size.width * 0.3;
-    if (deltaX < gestureMargin) {
-        self.xVelocityScale = MAX((gestureMargin - deltaX) / gestureMargin, 0.2);
-    } else {
-        self.xVelocityScale = 0;
-    }
-    if (deltaY < gestureMargin) {
-        self.yVelocityScale = MAX((gestureMargin - deltaY) / gestureMargin, 0.2);
-    } else {
-        self.yVelocityScale = 0;
-    }
-//    [self.collectionView setContentOffset:offset animated:YES];
-    if (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled) {
-        if (_timer) {
-            [_timer invalidate];
-            _timer = nil;
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        YQIndexPath *indexPath = (YQIndexPath *)[self.collectionView indexPathForItemAtPoint:location];
+        if (indexPath && indexPath.type == IndexPathTypeNormal) {
+            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+            cell.highlighted = YES;
         }
-        if (_displayLink) {
-            [_displayLink invalidate];
+        self.endIndexPath = self.startIndexPath = indexPath;
+    } else if (gesture.state == UIGestureRecognizerStateChanged) {
+        YQIndexPath *oldEndIndexPath = self.endIndexPath;
+        YQIndexPath *indexPath = (YQIndexPath *)[self.collectionView indexPathForItemAtPoint:location];
+        if (indexPath) {
+            if (![indexPath isEqualLocation:oldEndIndexPath]) {
+                
+                NSMutableSet *set = [NSMutableSet set];
+                NSInteger startRow, endRow, startColumn, endColumn;
+                if (indexPath.yqRow - oldEndIndexPath.yqRow > 0) {
+                    startRow = oldEndIndexPath.yqRow;
+                    endRow = indexPath.yqRow;
+                } else {
+                    startRow = indexPath.yqRow;
+                    endRow = oldEndIndexPath.yqRow;
+                }
+                if (indexPath.yqColumn - oldEndIndexPath.yqColumn > 0) {
+                    startColumn = oldEndIndexPath.yqColumn;
+                    endColumn = indexPath.yqColumn;
+                } else {
+                    startColumn = indexPath.yqColumn;
+                    endColumn = oldEndIndexPath.yqColumn;
+                }
+                for (NSInteger i = startRow; i <= endRow; i++) {
+                    for (NSInteger j = startColumn; j <= endColumn; j++) {
+                        YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:j row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount];
+                        [set addObject:indexPath];
+                    }
+                }
+                if (_coveredIndexPaths) {
+                    NSMutableSet *copy = [_coveredIndexPaths mutableCopy];
+                    [copy intersectSet:set];
+                    
+                }
+                self.endIndexPath = indexPath;
+            }
+            
         }
-    }
-}
-
-- (void)moveContentAction:(id)sender {
-    CGPoint offset = self.collectionView.contentOffset;
+    } else if (gesture.state == UIGestureRecognizerStateEnded) {
     
-    if (self.xVelocityScale != 0) {
-        offset.x += floor(self.xVelocityScale * kVelocity);
+    } else if (gesture.state == UIGestureRecognizerStateCancelled || gesture.state == UIGestureRecognizerStateFailed) {
+        
     }
-    if (self.yVelocityScale != 0) {
-        offset.y += floor(self.yVelocityScale * kVelocity);
-    }
-
-    self.collectionView.contentOffset = offset;
+    
 
 }
+
 
 #pragma mark override
 - (void)didMoveToSuperview {

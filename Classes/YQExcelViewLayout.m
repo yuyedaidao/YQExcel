@@ -26,10 +26,6 @@
 @end
 
 
-@interface YQIndexPath ()
-+ (instancetype)indexPathWithColumn:(NSUInteger)column row:(NSUInteger)row type:(IndexPathType)type referenceColumn:(NSUInteger)referenceColumn referenceRow:(NSUInteger)referenceRow;
-@end
-
 @implementation YQIndexPath
 
 + (instancetype)indexPathWithColumn:(NSUInteger)column row:(NSUInteger)row type:(IndexPathType)type referenceColumn:(NSUInteger)referenceColumn referenceRow:(NSUInteger)referenceRow {
@@ -53,6 +49,10 @@
     indexPath->_yqRow = row;
     indexPath->_type = type;
     return indexPath;
+}
+
+- (BOOL)isEqualLocation:(YQIndexPath *)another {
+    return !((self.yqRow ^ another.yqRow) || (self.yqColumn ^ another.yqColumn));
 }
 
 @end

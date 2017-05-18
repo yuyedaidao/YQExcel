@@ -19,10 +19,11 @@ typedef NS_ENUM(NSUInteger, IndexPathType) {
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YQIndexPath : NSIndexPath
-
++ (instancetype)indexPathWithColumn:(NSUInteger)column row:(NSUInteger)row type:(IndexPathType)type referenceColumn:(NSUInteger)referenceColumn referenceRow:(NSUInteger)referenceRow;
 @property (assign, nonatomic, readonly) NSUInteger yqColumn;
 @property (assign, nonatomic, readonly) NSUInteger yqRow;
 @property (assign, nonatomic, readonly) IndexPathType type;
+- (BOOL)isEqualLocation:(YQIndexPath *)another;
 
 @end
 
