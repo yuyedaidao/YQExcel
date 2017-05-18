@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		219EAD9C1ECC35F3009D0E93 /* NormalCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EAD9A1ECC35F3009D0E93 /* NormalCollectionCell.m */; };
+		219EAD9D1ECC35F3009D0E93 /* NormalCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EAD9A1ECC35F3009D0E93 /* NormalCollectionCell.m */; };
+		219EAD9E1ECC35F3009D0E93 /* NormalCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EAD9A1ECC35F3009D0E93 /* NormalCollectionCell.m */; };
+		219EAD9F1ECC35F3009D0E93 /* NormalCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EAD9B1ECC35F3009D0E93 /* NormalCollectionCell.xib */; };
+		219EADA01ECC35F3009D0E93 /* NormalCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EAD9B1ECC35F3009D0E93 /* NormalCollectionCell.xib */; };
+		219EADA11ECC35F3009D0E93 /* NormalCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EAD9B1ECC35F3009D0E93 /* NormalCollectionCell.xib */; };
+		219EADA51ECC3613009D0E93 /* ColumnTitleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EADA31ECC3613009D0E93 /* ColumnTitleCollectionCell.m */; };
+		219EADA61ECC3613009D0E93 /* ColumnTitleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EADA31ECC3613009D0E93 /* ColumnTitleCollectionCell.m */; };
+		219EADA71ECC3614009D0E93 /* ColumnTitleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EADA31ECC3613009D0E93 /* ColumnTitleCollectionCell.m */; };
+		219EADA81ECC3614009D0E93 /* ColumnTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADA41ECC3613009D0E93 /* ColumnTitleCollectionCell.xib */; };
+		219EADA91ECC3614009D0E93 /* ColumnTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADA41ECC3613009D0E93 /* ColumnTitleCollectionCell.xib */; };
+		219EADAA1ECC3614009D0E93 /* ColumnTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADA41ECC3613009D0E93 /* ColumnTitleCollectionCell.xib */; };
+		219EADAE1ECC362A009D0E93 /* RowTitleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EADAC1ECC362A009D0E93 /* RowTitleCollectionCell.m */; };
+		219EADAF1ECC362A009D0E93 /* RowTitleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EADAC1ECC362A009D0E93 /* RowTitleCollectionCell.m */; };
+		219EADB01ECC362A009D0E93 /* RowTitleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 219EADAC1ECC362A009D0E93 /* RowTitleCollectionCell.m */; };
+		219EADB11ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */; };
+		219EADB21ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */; };
+		219EADB31ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */; };
 		21D965AE1ECA9C27005162BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965AD1ECA9C27005162BE /* main.m */; };
 		21D965B11ECA9C27005162BE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965B01ECA9C27005162BE /* AppDelegate.m */; };
 		21D965B41ECA9C28005162BE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965B31ECA9C28005162BE /* ViewController.m */; };
@@ -15,6 +33,12 @@
 		21D965BC1ECA9C29005162BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21D965BA1ECA9C29005162BE /* LaunchScreen.storyboard */; };
 		21D965C71ECA9C2D005162BE /* YQExcelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965C61ECA9C2D005162BE /* YQExcelTests.m */; };
 		21D965D21ECA9C2D005162BE /* YQExcelUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965D11ECA9C2D005162BE /* YQExcelUITests.m */; };
+		21D965E21ECAD2F3005162BE /* YQExcelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965E11ECAD2F3005162BE /* YQExcelView.m */; };
+		21D965E31ECAD2F3005162BE /* YQExcelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965E11ECAD2F3005162BE /* YQExcelView.m */; };
+		21D965E41ECAD2F3005162BE /* YQExcelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965E11ECAD2F3005162BE /* YQExcelView.m */; };
+		21D965E71ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965E61ECAD4E2005162BE /* YQExcelViewLayout.m */; };
+		21D965E81ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965E61ECAD4E2005162BE /* YQExcelViewLayout.m */; };
+		21D965E91ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965E61ECAD4E2005162BE /* YQExcelViewLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +59,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		219EAD991ECC35F3009D0E93 /* NormalCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormalCollectionCell.h; path = ../NormalCollectionCell.h; sourceTree = "<group>"; };
+		219EAD9A1ECC35F3009D0E93 /* NormalCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormalCollectionCell.m; path = ../NormalCollectionCell.m; sourceTree = "<group>"; };
+		219EAD9B1ECC35F3009D0E93 /* NormalCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NormalCollectionCell.xib; path = ../NormalCollectionCell.xib; sourceTree = "<group>"; };
+		219EADA21ECC3613009D0E93 /* ColumnTitleCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColumnTitleCollectionCell.h; sourceTree = "<group>"; };
+		219EADA31ECC3613009D0E93 /* ColumnTitleCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColumnTitleCollectionCell.m; sourceTree = "<group>"; };
+		219EADA41ECC3613009D0E93 /* ColumnTitleCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColumnTitleCollectionCell.xib; sourceTree = "<group>"; };
+		219EADAB1ECC362A009D0E93 /* RowTitleCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RowTitleCollectionCell.h; sourceTree = "<group>"; };
+		219EADAC1ECC362A009D0E93 /* RowTitleCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RowTitleCollectionCell.m; sourceTree = "<group>"; };
+		219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RowTitleCollectionCell.xib; sourceTree = "<group>"; };
 		21D965A91ECA9C27005162BE /* YQExcel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YQExcel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D965AD1ECA9C27005162BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		21D965AF1ECA9C27005162BE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,6 +84,10 @@
 		21D965CD1ECA9C2D005162BE /* YQExcelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YQExcelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D965D11ECA9C2D005162BE /* YQExcelUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YQExcelUITests.m; sourceTree = "<group>"; };
 		21D965D31ECA9C2D005162BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21D965E01ECAD2F3005162BE /* YQExcelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQExcelView.h; sourceTree = "<group>"; };
+		21D965E11ECAD2F3005162BE /* YQExcelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQExcelView.m; sourceTree = "<group>"; };
+		21D965E51ECAD4E2005162BE /* YQExcelViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQExcelViewLayout.h; sourceTree = "<group>"; };
+		21D965E61ECAD4E2005162BE /* YQExcelViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQExcelViewLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +118,7 @@
 		21D965A01ECA9C26005162BE = {
 			isa = PBXGroup;
 			children = (
+				21D965DF1ECA9D06005162BE /* Classes */,
 				21D965AB1ECA9C27005162BE /* YQExcel */,
 				21D965C51ECA9C2C005162BE /* YQExcelTests */,
 				21D965D01ECA9C2D005162BE /* YQExcelUITests */,
@@ -105,6 +143,15 @@
 				21D965B01ECA9C27005162BE /* AppDelegate.m */,
 				21D965B21ECA9C27005162BE /* ViewController.h */,
 				21D965B31ECA9C28005162BE /* ViewController.m */,
+				219EAD991ECC35F3009D0E93 /* NormalCollectionCell.h */,
+				219EAD9A1ECC35F3009D0E93 /* NormalCollectionCell.m */,
+				219EAD9B1ECC35F3009D0E93 /* NormalCollectionCell.xib */,
+				219EADA21ECC3613009D0E93 /* ColumnTitleCollectionCell.h */,
+				219EADA31ECC3613009D0E93 /* ColumnTitleCollectionCell.m */,
+				219EADA41ECC3613009D0E93 /* ColumnTitleCollectionCell.xib */,
+				219EADAB1ECC362A009D0E93 /* RowTitleCollectionCell.h */,
+				219EADAC1ECC362A009D0E93 /* RowTitleCollectionCell.m */,
+				219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */,
 				21D965B51ECA9C28005162BE /* Main.storyboard */,
 				21D965B81ECA9C29005162BE /* Assets.xcassets */,
 				21D965BA1ECA9C29005162BE /* LaunchScreen.storyboard */,
@@ -138,6 +185,17 @@
 				21D965D31ECA9C2D005162BE /* Info.plist */,
 			);
 			path = YQExcelUITests;
+			sourceTree = "<group>";
+		};
+		21D965DF1ECA9D06005162BE /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				21D965E01ECAD2F3005162BE /* YQExcelView.h */,
+				21D965E11ECAD2F3005162BE /* YQExcelView.m */,
+				21D965E51ECAD4E2005162BE /* YQExcelViewLayout.h */,
+				21D965E61ECAD4E2005162BE /* YQExcelViewLayout.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +308,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				21D965BC1ECA9C29005162BE /* LaunchScreen.storyboard in Resources */,
+				219EADA81ECC3614009D0E93 /* ColumnTitleCollectionCell.xib in Resources */,
 				21D965B91ECA9C29005162BE /* Assets.xcassets in Resources */,
+				219EADB11ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */,
+				219EAD9F1ECC35F3009D0E93 /* NormalCollectionCell.xib in Resources */,
 				21D965B71ECA9C28005162BE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +320,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				219EADB21ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */,
+				219EADA91ECC3614009D0E93 /* ColumnTitleCollectionCell.xib in Resources */,
+				219EADA01ECC35F3009D0E93 /* NormalCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +330,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				219EADB31ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */,
+				219EADAA1ECC3614009D0E93 /* ColumnTitleCollectionCell.xib in Resources */,
+				219EADA11ECC35F3009D0E93 /* NormalCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,8 +343,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				219EAD9C1ECC35F3009D0E93 /* NormalCollectionCell.m in Sources */,
+				219EADAE1ECC362A009D0E93 /* RowTitleCollectionCell.m in Sources */,
 				21D965B41ECA9C28005162BE /* ViewController.m in Sources */,
 				21D965B11ECA9C27005162BE /* AppDelegate.m in Sources */,
+				219EADA51ECC3613009D0E93 /* ColumnTitleCollectionCell.m in Sources */,
+				21D965E71ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */,
+				21D965E21ECAD2F3005162BE /* YQExcelView.m in Sources */,
 				21D965AE1ECA9C27005162BE /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +358,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				219EADA61ECC3613009D0E93 /* ColumnTitleCollectionCell.m in Sources */,
+				21D965E31ECAD2F3005162BE /* YQExcelView.m in Sources */,
+				21D965E81ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */,
+				219EADAF1ECC362A009D0E93 /* RowTitleCollectionCell.m in Sources */,
+				219EAD9D1ECC35F3009D0E93 /* NormalCollectionCell.m in Sources */,
 				21D965C71ECA9C2D005162BE /* YQExcelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,6 +371,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				219EADA71ECC3614009D0E93 /* ColumnTitleCollectionCell.m in Sources */,
+				21D965E41ECAD2F3005162BE /* YQExcelView.m in Sources */,
+				21D965E91ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */,
+				219EADB01ECC362A009D0E93 /* RowTitleCollectionCell.m in Sources */,
+				219EAD9E1ECC35F3009D0E93 /* NormalCollectionCell.m in Sources */,
 				21D965D21ECA9C2D005162BE /* YQExcelUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,8 +513,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GP4MMMES25;
 				INFOPLIST_FILE = YQExcel/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQExcel;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu.YQExcel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -443,8 +526,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GP4MMMES25;
 				INFOPLIST_FILE = YQExcel/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu..YQExcel;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iqilu.YQExcel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -518,6 +602,7 @@
 				21D965D81ECA9C2D005162BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21D965D91ECA9C2D005162BE /* Build configuration list for PBXNativeTarget "YQExcelTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +611,7 @@
 				21D965DB1ECA9C2D005162BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21D965DC1ECA9C2D005162BE /* Build configuration list for PBXNativeTarget "YQExcelUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +620,7 @@
 				21D965DE1ECA9C2D005162BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
