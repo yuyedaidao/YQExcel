@@ -135,8 +135,15 @@ static CGFloat const kVelocity = 10.0f;
                 if (_coveredIndexPaths) {
                     NSMutableSet *copy = [_coveredIndexPaths mutableCopy];
                     [copy intersectSet:set];
+                    NSMutableSet *copy2 = [_coveredIndexPaths mutableCopy];
+                    [copy2 minusSet:copy];
                     
+                        //FIXME:这个算法不对
+                    [copy2.allObjects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        NSLog(@"消除的 : %@",obj);
+                    }];
                 }
+                _coveredIndexPaths = set;
                 self.endIndexPath = indexPath;
             }
             
