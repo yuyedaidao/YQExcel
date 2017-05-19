@@ -8,7 +8,12 @@
 
 #import "YQExcelView.h"
 
-static CGFloat const kVelocity = 10.0f;
+//static CGFloat const kVelocity = 10.0f;
+
+CGRect CGRectFromIndexPaths(YQIndexPath *start, YQIndexPath *end) {
+    return CGRectMake(start.yqColumn, start.yqRow, (CGFloat)end.yqColumn - (CGFloat)start.yqColumn, (CGFloat)end.yqRow - (CGFloat)start.yqRow);
+}
+
 
 @interface YQExcelView () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -111,38 +116,108 @@ static CGFloat const kVelocity = 10.0f;
             if (![indexPath isEqualLocation:oldEndIndexPath]) {
                 
                 NSMutableSet *set = [NSMutableSet set];
-                NSInteger startRow, endRow, startColumn, endColumn;
-                if (indexPath.yqRow - oldEndIndexPath.yqRow > 0) {
-                    startRow = oldEndIndexPath.yqRow;
-                    endRow = indexPath.yqRow;
+//                NSInteger startRow, endRow, startColumn, endColumn;
+//                if (indexPath.yqRow - oldEndIndexPath.yqRow > 0) {
+//                    startRow = oldEndIndexPath.yqRow;
+//                    endRow = indexPath.yqRow;
+//                } else {
+//                    startRow = indexPath.yqRow;
+//                    endRow = oldEndIndexPath.yqRow;
+//                }
+//                if (indexPath.yqColumn - oldEndIndexPath.yqColumn > 0) {
+//                    startColumn = oldEndIndexPath.yqColumn;
+//                    endColumn = indexPath.yqColumn;
+//                } else {
+//                    startColumn = indexPath.yqColumn;
+//                    endColumn = oldEndIndexPath.yqColumn;
+//                }
+                
+                
+                CGRect current = CGRectFromIndexPaths(_startIndexPath, indexPath);
+                CGRect old = CGRectFromIndexPaths(_startIndexPath, oldEndIndexPath);
+                //如果没有交集 那取消的范围就是原来的范围,但是因为起点是一样的,所以这是不可能发生的
+                CGRect intersection = CGRectIntersection(current, old);
+                NSLog(@"intersection: %@", NSStringFromCGRect(intersection));
+                NSInteger midColumn;
+                NSInteger midRow;
+                
+                NSMutableArray *addIndexPaths = [NSMutableArray array];
+                NSMutableArray *deleteIndexPaths = [NSMutableArray array];
+                
+                if (indexPath.yqRow < _startIndexPath.yqRow) {
+                    if (indexPath.yqColumn < _startIndexPath.yqColumn) {
+                        midColumn = (NSInteger)(intersection.origin.x);
+                        midRow = (NSInteger)(intersection.origin.y);
+                    } else {
+                        midColumn = (NSInteger)(intersection.origin.x + intersection.size.width);
+                        midRow = (NSInteger)(intersection.origin.y);
+                    }
                 } else {
-                    startRow = indexPath.yqRow;
-                    endRow = oldEndIndexPath.yqRow;
-                }
-                if (indexPath.yqColumn - oldEndIndexPath.yqColumn > 0) {
-                    startColumn = oldEndIndexPath.yqColumn;
-                    endColumn = indexPath.yqColumn;
-                } else {
-                    startColumn = indexPath.yqColumn;
-                    endColumn = oldEndIndexPath.yqColumn;
-                }
-                for (NSInteger i = startRow; i <= endRow; i++) {
-                    for (NSInteger j = startColumn; j <= endColumn; j++) {
-                        YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:j row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount];
-                        [set addObject:indexPath];
+                    if (indexPath.yqColumn < _startIndexPath.yqColumn) {
+                        midColumn = (NSInteger)(intersection.origin.x);
+                        midRow = (NSInteger)(intersection.origin.y + intersection.size.height);
+                    } else {
+                        midColumn = (NSInteger)(intersection.origin.x + intersection.size.width);
+                        midRow = (NSInteger)(intersection.origin.y + intersection.size.height);
+                        NSInteger deltaRow = (oldEndIndexPath.yqRow < indexPath.yqRow) ? indexPath.yqRow - midRow : midRow - oldEndIndexPath.yqRow;
+                        NSInteger deltaColumn = (oldEndIndexPath.yqColumn < indexPath.yqColumn) ? indexPath.yqColumn - midColumn : midColumn - oldEndIndexPath.yqColumn;
+                        
+                        if (deltaRow == 0) {
+                            if (deltaColumn > 0) {
+                                if (deltaColumn == 1) {
+                                    for (NSInteger i = _startIndexPath.yqRow; i <= indexPath.yqRow; i++) {
+                                        [addIndexPaths addObject:[YQIndexPath indexPathWithColumn:midColumn + 1 row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount]];
+                                    }
+                                } else {
+                                    [addIndexPaths addObjectsFromArray:[self indexPathsFromOriginX:_startIndexPath.yqRow originY:midColumn + 1 width:deltaColumn height: indexPath.yqRow - _startIndexPath.row + 1]];
+                                }
+                            } else if (deltaColumn < 0) {
+                                if (deltaColumn == -1) {
+                                    for (NSInteger i = _startIndexPath.yqRow; i <= indexPath.yqRow; i++) {
+                                        [deleteIndexPaths addObject:[YQIndexPath indexPathWithColumn:midColumn + 1 row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount]];
+                                    }
+                                } else {
+                                    [deleteIndexPaths addObjectsFromArray:[self indexPathsFromOriginX:_startIndexPath.yqRow originY:midColumn + 1 width:deltaColumn height: indexPath.yqRow - _startIndexPath.row + 1]];
+                                }
+                            }
+                            
+                        } else if(deltaRow > 0) {
+                            if (deltaColumn == 0) {
+                                
+                            } else if (deltaColumn > 0) {
+                                
+                            } else {
+                                
+                            }
+                        } else { //<   0
+                            if (deltaColumn == 0) {
+                                
+                            } else if (deltaColumn > 0) {
+                                
+                            } else {
+                                
+                            }
+                        }
+
                     }
                 }
-                if (_coveredIndexPaths) {
-                    NSMutableSet *copy = [_coveredIndexPaths mutableCopy];
-                    [copy intersectSet:set];
-                    NSMutableSet *copy2 = [_coveredIndexPaths mutableCopy];
-                    [copy2 minusSet:copy];
-                    
-                        //FIXME:这个算法不对
-                    [copy2.allObjects enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        NSLog(@"消除的 : %@",obj);
-                    }];
-                }
+                
+                
+                
+//                if (deltaRow >= 0 && deltaColumn >= 0) {
+//                    [addIndexPaths addObjectsFromArray:[self indexPathsFromOriginX:_startIndexPath.yqColumn originY:midRow + 1 width:indexPath.yqColumn - _startIndexPath.yqColumn + 1 height:deltaRow]];
+//                    [addIndexPaths addObjectsFromArray:[self indexPathsFromOriginX:midColumn + 1 originY:_startIndexPath.yqRow width:deltaColumn height:midRow - _startIndexPath.yqRow + 1]];
+//                } else {
+//                    
+//                }
+                
+                
+                [addIndexPaths enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    NSLog(@"add : %@",obj);
+                }];
+                [deleteIndexPaths enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    NSLog(@"del : %@",obj);
+                }];
                 _coveredIndexPaths = set;
                 self.endIndexPath = indexPath;
             }
@@ -157,6 +232,16 @@ static CGFloat const kVelocity = 10.0f;
 
 }
 
+#pragma mark help
+- (NSArray<YQIndexPath *> *) indexPathsFromOriginX:(NSInteger)originX originY:(NSInteger)originY width:(NSInteger)width height:(NSInteger)height {
+    NSMutableArray *array = [NSMutableArray array];
+    for (NSInteger i = originY ; i < originY + height; i++) {
+        for (NSInteger j = originX; j < originX + width; j++) {
+            [array addObject:[YQIndexPath indexPathWithColumn:j row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount]];
+        }
+    }
+    return array;
+}
 
 #pragma mark override
 - (void)didMoveToSuperview {

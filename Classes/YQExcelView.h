@@ -41,6 +41,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGFloat)columnTitleHeightInExcel:(YQExcelView *)view;
 - (CGFloat)rowTitleWidthInExcel:(YQExcelView *)view;
 
+- (void)execlView:(YQExcelView *)view didCoverItemsForIndexPaths:(NSArray<YQIndexPath *> *)indexPaths;
+- (void)execlView:(YQExcelView *)view didUnCoverItemsForIndexPaths:(NSArray<YQIndexPath *> *)indexPaths;
+
+
+
 @end
 NS_ASSUME_NONNULL_END
 

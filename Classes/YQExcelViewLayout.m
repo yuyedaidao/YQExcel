@@ -55,6 +55,10 @@
     return !((self.yqRow ^ another.yqRow) || (self.yqColumn ^ another.yqColumn));
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@: %p> {yqColumn: %ld, yqRow: %ld, type: %ld, item: %ld}", NSStringFromClass([self class]), self, self.yqColumn, self.yqRow, self.type, self.item];
+}
+
 @end
 
 
@@ -214,5 +218,6 @@
     }
     isMalloced = YES;
 }
+
 
 @end

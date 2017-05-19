@@ -46,7 +46,7 @@
 }
 - (__kindof UICollectionViewCell *)excelView:(YQExcelView *)view cellForItemAtIndexPath:(YQIndexPath *)indexPath {
     NormalCollectionCell *cell = [view dequeueReusableCellWithReuseIdentifier:NSStringFromClass([NormalCollectionCell class]) forIndexPath:indexPath];
-    cell.titleLabel.text = [NSString stringWithFormat:@"(%ld, %ld, %ld)", indexPath.yqRow, indexPath.yqColumn, indexPath.item];
+    cell.titleLabel.text = [NSString stringWithFormat:@"(%ld, %ld)", indexPath.yqColumn, indexPath.yqRow];
     return cell;
 }
 
@@ -56,7 +56,7 @@
 }
 - (__kindof UICollectionViewCell *)excelView:(YQExcelView *)view columnTitleViewAtIndexPath:(nonnull YQIndexPath *)indexPath {
     ColumnTitleCollectionCell *cell = [view dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ColumnTitleCollectionCell class]) forIndexPath:indexPath];
-    cell.titleLabel.text = [@(indexPath.yqColumn) stringValue];
+    cell.titleLabel.text = [@(indexPath.yqColumn - 1) stringValue];
     return cell;
 }
 - (__kindof UICollectionViewCell *)excelView:(YQExcelView *)view rowTitleViewAtIndexPath:(nonnull YQIndexPath *)indexPath {
