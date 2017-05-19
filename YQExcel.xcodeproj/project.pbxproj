@@ -25,6 +25,9 @@
 		219EADB11ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */; };
 		219EADB21ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */; };
 		219EADB31ECC362A009D0E93 /* RowTitleCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */; };
+		21BBE5C01ECEED4500CE55D0 /* YQCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21BBE5BF1ECEED4500CE55D0 /* YQCoverView.m */; };
+		21BBE5C11ECEED4500CE55D0 /* YQCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21BBE5BF1ECEED4500CE55D0 /* YQCoverView.m */; };
+		21BBE5C21ECEED4500CE55D0 /* YQCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21BBE5BF1ECEED4500CE55D0 /* YQCoverView.m */; };
 		21D965AE1ECA9C27005162BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965AD1ECA9C27005162BE /* main.m */; };
 		21D965B11ECA9C27005162BE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965B01ECA9C27005162BE /* AppDelegate.m */; };
 		21D965B41ECA9C28005162BE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D965B31ECA9C28005162BE /* ViewController.m */; };
@@ -68,6 +71,8 @@
 		219EADAB1ECC362A009D0E93 /* RowTitleCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RowTitleCollectionCell.h; sourceTree = "<group>"; };
 		219EADAC1ECC362A009D0E93 /* RowTitleCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RowTitleCollectionCell.m; sourceTree = "<group>"; };
 		219EADAD1ECC362A009D0E93 /* RowTitleCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RowTitleCollectionCell.xib; sourceTree = "<group>"; };
+		21BBE5BE1ECEED4500CE55D0 /* YQCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQCoverView.h; sourceTree = "<group>"; };
+		21BBE5BF1ECEED4500CE55D0 /* YQCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQCoverView.m; sourceTree = "<group>"; };
 		21D965A91ECA9C27005162BE /* YQExcel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YQExcel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D965AD1ECA9C27005162BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		21D965AF1ECA9C27005162BE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -194,6 +199,8 @@
 				21D965E11ECAD2F3005162BE /* YQExcelView.m */,
 				21D965E51ECAD4E2005162BE /* YQExcelViewLayout.h */,
 				21D965E61ECAD4E2005162BE /* YQExcelViewLayout.m */,
+				21BBE5BE1ECEED4500CE55D0 /* YQCoverView.h */,
+				21BBE5BF1ECEED4500CE55D0 /* YQCoverView.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -349,6 +356,7 @@
 				21D965B11ECA9C27005162BE /* AppDelegate.m in Sources */,
 				219EADA51ECC3613009D0E93 /* ColumnTitleCollectionCell.m in Sources */,
 				21D965E71ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */,
+				21BBE5C01ECEED4500CE55D0 /* YQCoverView.m in Sources */,
 				21D965E21ECAD2F3005162BE /* YQExcelView.m in Sources */,
 				21D965AE1ECA9C27005162BE /* main.m in Sources */,
 			);
@@ -361,6 +369,7 @@
 				219EADA61ECC3613009D0E93 /* ColumnTitleCollectionCell.m in Sources */,
 				21D965E31ECAD2F3005162BE /* YQExcelView.m in Sources */,
 				21D965E81ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */,
+				21BBE5C11ECEED4500CE55D0 /* YQCoverView.m in Sources */,
 				219EADAF1ECC362A009D0E93 /* RowTitleCollectionCell.m in Sources */,
 				219EAD9D1ECC35F3009D0E93 /* NormalCollectionCell.m in Sources */,
 				21D965C71ECA9C2D005162BE /* YQExcelTests.m in Sources */,
@@ -374,6 +383,7 @@
 				219EADA71ECC3614009D0E93 /* ColumnTitleCollectionCell.m in Sources */,
 				21D965E41ECAD2F3005162BE /* YQExcelView.m in Sources */,
 				21D965E91ECAD4E2005162BE /* YQExcelViewLayout.m in Sources */,
+				21BBE5C21ECEED4500CE55D0 /* YQCoverView.m in Sources */,
 				219EADB01ECC362A009D0E93 /* RowTitleCollectionCell.m in Sources */,
 				219EAD9E1ECC35F3009D0E93 /* NormalCollectionCell.m in Sources */,
 				21D965D21ECA9C2D005162BE /* YQExcelUITests.m in Sources */,
