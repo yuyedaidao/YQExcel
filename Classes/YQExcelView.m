@@ -7,13 +7,42 @@
 //
 
 #import "YQExcelView.h"
-
+#import "YQCoverView.h"
 //static CGFloat const kVelocity = 10.0f;
 
-CGRect CGRectFromIndexPaths(YQIndexPath *start, YQIndexPath *end) {
-    return CGRectMake(start.yqColumn, start.yqRow, (CGFloat)end.yqColumn - (CGFloat)start.yqColumn, (CGFloat)end.yqRow - (CGFloat)start.yqRow);
-}
+//CGRect CGRectFromIndexPaths(YQIndexPath *start, YQIndexPath *end) {
+//    return CGRectMake(start.yqColumn, start.yqRow, (CGFloat)end.yqColumn - (CGFloat)start.yqColumn, (CGFloat)end.yqRow - (CGFloat)start.yqRow);
+//}
 
+typedef NS_ENUM(NSUInteger, YQIndexPathDirection) {
+    YQIPDirectionLeft,
+    YQIPDirectionRight,
+    YQIPDirectionUp,
+    YQIPDirectionDown,
+    YQIPDirectionLeftup,
+    YQIPDirectionLeftdown,
+    YQIPDirectionRightup,
+    YQIPDirectionRightdown,
+    YQIPDirectionCover,
+};
+
+UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *indexPath, YQIndexPath *refer) {
+    if (indexPath.yqRow == refer.yqRow) {
+        if (indexPath.yqColumn == refer.yqColumn) return YQIPDirectionCover;
+        if (indexPath.yqColumn > refer.yqColumn) return YQIPDirectionRight;
+        return YQIPDirectionLeft;
+    }
+    if (indexPath.yqRow < refer.yqRow) {
+        if (indexPath.yqColumn == refer.yqColumn) return YQIPDirectionUp;
+        if (indexPath.yqColumn < refer.yqColumn) return YQIPDirectionLeftup;
+        return YQIPDirectionRightup;
+    }
+    
+    if (indexPath.yqColumn == refer.yqColumn) return YQIPDirectionDown;
+    if (indexPath.yqColumn < refer.yqColumn) return YQIPDirectionLeftdown;
+    return YQIPDirectionRightdown;
+    
+}
 
 @interface YQExcelView () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -23,9 +52,8 @@ CGRect CGRectFromIndexPaths(YQIndexPath *start, YQIndexPath *end) {
 @property (strong, nonatomic) UILongPressGestureRecognizer *pressGesture;
 @property (strong, nonatomic) YQIndexPath *startIndexPath;
 @property (strong, nonatomic) YQIndexPath *endIndexPath;
-
-@property (strong, nonatomic) NSMutableSet<YQIndexPath *> *coveredIndexPaths;
-
+@property (strong, nonatomic) YQCoverView *coverView;
+@property (assign, nonatomic) CGRect coverOriginalRect;
 @end
 
 @implementation YQExcelView
@@ -104,139 +132,59 @@ CGRect CGRectFromIndexPaths(YQIndexPath *start, YQIndexPath *end) {
     CGPoint location = [gesture locationOfTouch:0 inView:self.collectionView];
     if (gesture.state == UIGestureRecognizerStateBegan) {
         YQIndexPath *indexPath = (YQIndexPath *)[self.collectionView indexPathForItemAtPoint:location];
-        if (indexPath && indexPath.type == IndexPathTypeNormal) {
-            UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-            cell.highlighted = YES;
-        }
-        self.endIndexPath = self.startIndexPath = indexPath;
+        UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
+        self.coverView.frame = self.coverOriginalRect = cell.frame;
+        [self.collectionView addSubview:self.coverView];
+        self.startIndexPath = indexPath;
     } else if (gesture.state == UIGestureRecognizerStateChanged) {
-        YQIndexPath *oldEndIndexPath = self.endIndexPath;
         YQIndexPath *indexPath = (YQIndexPath *)[self.collectionView indexPathForItemAtPoint:location];
         if (indexPath) {
-            if (![indexPath isEqualLocation:oldEndIndexPath]) {
-                
-                NSMutableSet *set = [NSMutableSet set];
-//                NSInteger startRow, endRow, startColumn, endColumn;
-//                if (indexPath.yqRow - oldEndIndexPath.yqRow > 0) {
-//                    startRow = oldEndIndexPath.yqRow;
-//                    endRow = indexPath.yqRow;
-//                } else {
-//                    startRow = indexPath.yqRow;
-//                    endRow = oldEndIndexPath.yqRow;
-//                }
-//                if (indexPath.yqColumn - oldEndIndexPath.yqColumn > 0) {
-//                    startColumn = oldEndIndexPath.yqColumn;
-//                    endColumn = indexPath.yqColumn;
-//                } else {
-//                    startColumn = indexPath.yqColumn;
-//                    endColumn = oldEndIndexPath.yqColumn;
-//                }
-                
-                
-                CGRect current = CGRectFromIndexPaths(_startIndexPath, indexPath);
-                CGRect old = CGRectFromIndexPaths(_startIndexPath, oldEndIndexPath);
-                //如果没有交集 那取消的范围就是原来的范围,但是因为起点是一样的,所以这是不可能发生的
-                CGRect intersection = CGRectIntersection(current, old);
-                NSLog(@"intersection: %@", NSStringFromCGRect(intersection));
-                NSInteger midColumn;
-                NSInteger midRow;
-                
-                NSMutableArray *addIndexPaths = [NSMutableArray array];
-                NSMutableArray *deleteIndexPaths = [NSMutableArray array];
-                
-                if (indexPath.yqRow < _startIndexPath.yqRow) {
-                    if (indexPath.yqColumn < _startIndexPath.yqColumn) {
-                        midColumn = (NSInteger)(intersection.origin.x);
-                        midRow = (NSInteger)(intersection.origin.y);
-                    } else {
-                        midColumn = (NSInteger)(intersection.origin.x + intersection.size.width);
-                        midRow = (NSInteger)(intersection.origin.y);
-                    }
-                } else {
-                    if (indexPath.yqColumn < _startIndexPath.yqColumn) {
-                        midColumn = (NSInteger)(intersection.origin.x);
-                        midRow = (NSInteger)(intersection.origin.y + intersection.size.height);
-                    } else {
-                        midColumn = (NSInteger)(intersection.origin.x + intersection.size.width);
-                        midRow = (NSInteger)(intersection.origin.y + intersection.size.height);
-                        NSInteger deltaRow = (oldEndIndexPath.yqRow < indexPath.yqRow) ? indexPath.yqRow - midRow : midRow - oldEndIndexPath.yqRow;
-                        NSInteger deltaColumn = (oldEndIndexPath.yqColumn < indexPath.yqColumn) ? indexPath.yqColumn - midColumn : midColumn - oldEndIndexPath.yqColumn;
-                        
-                        if (deltaRow == 0) {
-                            if (deltaColumn > 0) {
-                                if (deltaColumn == 1) {
-                                    for (NSInteger i = _startIndexPath.yqRow; i <= indexPath.yqRow; i++) {
-                                        [addIndexPaths addObject:[YQIndexPath indexPathWithColumn:midColumn + 1 row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount]];
-                                    }
-                                } else {
-                                    [addIndexPaths addObjectsFromArray:[self indexPathsFromOriginX:_startIndexPath.yqRow originY:midColumn + 1 width:deltaColumn height: indexPath.yqRow - _startIndexPath.row + 1]];
-                                }
-                            } else if (deltaColumn < 0) {
-                                if (deltaColumn == -1) {
-                                    for (NSInteger i = _startIndexPath.yqRow; i <= indexPath.yqRow; i++) {
-                                        [deleteIndexPaths addObject:[YQIndexPath indexPathWithColumn:midColumn + 1 row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount]];
-                                    }
-                                } else {
-                                    [deleteIndexPaths addObjectsFromArray:[self indexPathsFromOriginX:_startIndexPath.yqRow originY:midColumn + 1 width:deltaColumn height: indexPath.yqRow - _startIndexPath.row + 1]];
-                                }
-                            }
-                            
-                        } else if(deltaRow > 0) {
-                            if (deltaColumn == 0) {
-                                
-                            } else if (deltaColumn > 0) {
-                                
-                            } else {
-                                
-                            }
-                        } else { //<   0
-                            if (deltaColumn == 0) {
-                                
-                            } else if (deltaColumn > 0) {
-                                
-                            } else {
-                                
-                            }
-                        }
-
-                    }
-                }
-                
-                
-                
-//                if (deltaRow >= 0 && deltaColumn >= 0) {
-//                    [addIndexPaths addObjectsFromArray:[self indexPathsFromOriginX:_startIndexPath.yqColumn originY:midRow + 1 width:indexPath.yqColumn - _startIndexPath.yqColumn + 1 height:deltaRow]];
-//                    [addIndexPaths addObjectsFromArray:[self indexPathsFromOriginX:midColumn + 1 originY:_startIndexPath.yqRow width:deltaColumn height:midRow - _startIndexPath.yqRow + 1]];
-//                } else {
-//                    
-//                }
-                
-                
-                [addIndexPaths enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    NSLog(@"add : %@",obj);
-                }];
-                [deleteIndexPaths enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    NSLog(@"del : %@",obj);
-                }];
-                _coveredIndexPaths = set;
-                self.endIndexPath = indexPath;
+            UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
+            CGRect rect = cell.frame;
+            switch (YQIndexPathGetDirection(indexPath, _startIndexPath)) {
+                case YQIPDirectionLeft:
+                case YQIPDirectionLeftup:
+                    self.coverView.frame = CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(_coverOriginalRect) - CGRectGetMinX(rect), CGRectGetMaxY(_coverOriginalRect) - CGRectGetMinY(rect));
+                    break;
+                case YQIPDirectionLeftdown:
+                    self.coverView.frame = CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(_coverOriginalRect), CGRectGetMaxX(_coverOriginalRect) - CGRectGetMinX(rect), CGRectGetMaxY(rect) - CGRectGetMinY(_coverOriginalRect));
+                    break;
+                case YQIPDirectionUp:
+                case YQIPDirectionRight:
+                case YQIPDirectionRightup:
+                    self.coverView.frame = CGRectMake(CGRectGetMinX(_coverOriginalRect), CGRectGetMinY(rect), CGRectGetMaxX(rect) - CGRectGetMinX(_coverOriginalRect), CGRectGetMaxY(_coverOriginalRect) - CGRectGetMinY(rect));
+                    break;
+                case YQIPDirectionDown:
+                case YQIPDirectionRightdown:
+                    self.coverView.frame = CGRectMake(CGRectGetMinX(_coverOriginalRect), CGRectGetMinY(_coverOriginalRect), CGRectGetMaxX(rect) - CGRectGetMinX(_coverOriginalRect), CGRectGetMaxY(rect) - CGRectGetMinY(_coverOriginalRect));
+                    break;
+                default:
+                    self.coverView.frame = cell.frame;
+                    break;
             }
-            
+            self.endIndexPath = indexPath;
         }
     } else if (gesture.state == UIGestureRecognizerStateEnded) {
-    
+        if ([self.delegate respondsToSelector:@selector(excelView:willUnCoverItemsOfIndexPaths:)]) {
+            [self.delegate excelView:self willUnCoverItemsOfIndexPaths:[self indexPathsFrom:self.startIndexPath to:self.endIndexPath]];
+        }
+        [self.coverView removeFromSuperview];
     } else if (gesture.state == UIGestureRecognizerStateCancelled || gesture.state == UIGestureRecognizerStateFailed) {
-        
+        [self.coverView removeFromSuperview];
     }
     
 
 }
 
 #pragma mark help
-- (NSArray<YQIndexPath *> *) indexPathsFromOriginX:(NSInteger)originX originY:(NSInteger)originY width:(NSInteger)width height:(NSInteger)height {
+- (NSArray<YQIndexPath *> *) indexPathsFrom:(YQIndexPath *)origin to:(YQIndexPath *)another {
+    NSInteger originX = origin.yqColumn;
+    NSInteger originY = origin.yqRow;
+    NSInteger endX = another.yqColumn;
+    NSInteger endY = another.yqRow;
     NSMutableArray *array = [NSMutableArray array];
-    for (NSInteger i = originY ; i < originY + height; i++) {
-        for (NSInteger j = originX; j < originX + width; j++) {
+    for (NSInteger i = originY ; i <= endY; i++) {
+        for (NSInteger j = originX; j <= endX; j++) {
             [array addObject:[YQIndexPath indexPathWithColumn:j row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount]];
         }
     }
@@ -251,7 +199,13 @@ CGRect CGRectFromIndexPaths(YQIndexPath *start, YQIndexPath *end) {
 }
 
 #pragma mark set&get
-
+- (YQCoverView *)coverView {
+    if (!_coverView) {
+        _coverView = [[YQCoverView alloc] init];
+        _coverView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.3];
+    }
+    return _coverView;
+}
 
 #pragma mark public
 - (__kindof UICollectionViewCell *)dequeueReusableCellWithReuseIdentifier:(nonnull NSString *)identifier forIndexPath:(nonnull NSIndexPath *)indexPath {

@@ -16,6 +16,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextAddRect(context, self.bounds);
     CGContextSetLineWidth(context, 2);
+    CGFloat lengths[2] = {10, 10};
+    CGContextSetLineDash(context, 0, lengths, 2);
     if (_edgeColor) {
         [_edgeColor setStroke];
     } else {
@@ -25,6 +27,10 @@
 
 }
 
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [self setNeedsDisplay];
+}
 
 - (void)setEdgeColor:(UIColor *)edgeColor {
     if (_edgeColor != edgeColor) {
