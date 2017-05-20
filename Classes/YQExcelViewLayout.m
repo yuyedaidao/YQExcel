@@ -65,19 +65,26 @@
 @interface YQExcelViewLayout () {
     CGFloat *heights;
     CGFloat *widths;
-    
     CGFloat *originYs;
     CGFloat *originXs;
-    
     BOOL isMalloced;
 }
 
 @property (assign, nonatomic) CGSize contentSize;
-
-
+@property (assign, nonatomic) NSInteger startRow;
+@property (assign, nonatomic) NSInteger startColumn;
+//@property (strong, nonatomic) NSArray<UICollectionViewLayoutAttributes *> *cacheIndexPaths;
 @end
 
 @implementation YQExcelViewLayout
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _startColumn = NSIntegerMin;
+        _startRow = NSIntegerMin;
+    }
+    return self;
+}
 
 - (void)prepareLayout {
     [super prepareLayout];
@@ -122,7 +129,6 @@
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     
-    NSMutableArray<UICollectionViewLayoutAttributes *> *array = [NSMutableArray array];
     //先确定边界
     CGFloat originY = rect.origin.y;
     NSInteger startRow = ceil((originY - _columnTitleHeight) / (_itemMinimumSize.height + self.minimumLineSpacing)) - 1;
@@ -135,7 +141,6 @@
         }
     }
     startRow = MAX(startRow, 0);
-    
     CGFloat originX = rect.origin.x;
     NSInteger startColumn = ceil((originX - _rowTitleWidth) / (_itemMinimumSize.width + self.minimumInteritemSpacing)) - 1;
     startColumn = MAX(startColumn, 0);
@@ -147,6 +152,14 @@
         }
     }
     startColumn = MAX(startColumn, 0);
+//    if (startColumn == _startColumn && startRow == _startRow) {
+//        if (_cacheIndexPaths) {
+//            NSLog(@"----");
+//            return _cacheIndexPaths;
+//        }
+//    }
+    _startColumn = startColumn;
+    _startRow = startRow;
     //一般column少,取这个的最大值
     NSInteger endColumn = startColumn;
     CGFloat maxX = CGRectGetMaxX(rect);
@@ -160,6 +173,8 @@
     }
     endColumn = MIN(endColumn, _columnCount - 1);
     NSInteger column = MAX(startColumn, 1);
+    
+    NSMutableArray<UICollectionViewLayoutAttributes *> *array = [NSMutableArray array];
     YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:0 row:0 type:IndexPathTypeColumnTitle referenceColumn:_columnCount referenceRow:_rowCount];
     [array addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
     while (column <= endColumn + 1) {
@@ -182,7 +197,7 @@
         }
         row++;
     }
-    
+//    self.cacheIndexPaths = array;
     return array;
 }
 
@@ -191,6 +206,37 @@
 }
 
 #pragma mark set&get
+
+- (CGFloat)widthForIndex:(NSInteger)index {
+    return widths[index];
+}
+- (void)setWidth:(CGFloat)width forIndex:(NSInteger)index {
+    widths[index] = width;
+}
+
+- (CGFloat)heightForIndex:(NSInteger)index {
+    return heights[index];
+}
+
+- (void)setHeight:(CGFloat)height forIndex:(NSInteger)index {
+    heights[index] = height;
+}
+
+- (CGFloat)originXForIndex:(NSInteger)index {
+    return originXs[index];
+}
+
+- (void)setOriginX:(CGFloat)originX forIndex:(NSInteger)index {
+    originXs[index] = originX;
+}
+
+- (CGFloat)originYForIndex:(NSInteger)index {
+    return originYs[index];
+}
+
+- (void)setOriginY:(CGFloat)originY forIndex:(NSInteger)index {
+    originYs[index] = originY;
+}
 
 - (void)setItemMinimumSize:(CGSize)itemMinimumSize {
     _itemMinimumSize = itemMinimumSize;
@@ -219,5 +265,11 @@
     isMalloced = YES;
 }
 
+#pragma mark public
+
+- (void)invalidateCache {
+    _startColumn = NSIntegerMin;
+    _startRow = NSIntegerMin;
+}
 
 @end

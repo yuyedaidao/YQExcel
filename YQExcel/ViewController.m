@@ -30,7 +30,7 @@
     self.excelView.delegate = self;
     self.excelView.dataSource = self;
     
-    [self.excelView reloadData];
+    [self.excelView reset];
     
 
 }
@@ -47,6 +47,7 @@
 - (__kindof UICollectionViewCell *)excelView:(YQExcelView *)view cellForItemAtIndexPath:(YQIndexPath *)indexPath {
     NormalCollectionCell *cell = [view dequeueReusableCellWithReuseIdentifier:NSStringFromClass([NormalCollectionCell class]) forIndexPath:indexPath];
     cell.titleLabel.text = [NSString stringWithFormat:@"(%ld, %ld)", indexPath.yqColumn, indexPath.yqRow];
+    cell.backgroundColor = [UIColor colorWithRed:arc4random()% 255 / 255.0 green:arc4random()% 255 / 255.0 blue:arc4random()% 255 / 255.0 alpha:1];
     return cell;
 }
 
@@ -64,11 +65,20 @@
     cell.titleLabel.text = [@(indexPath.yqRow) stringValue];
     return cell;
 }
+
+- (void)excelView:(YQExcelView *)view willUnCoverItemsOfIndexPaths:(NSArray<YQIndexPath *> *)indexPaths source:(nonnull YQIndexPath *)source end:(nonnull YQIndexPath *)end{
+//    NSLog(@"range :: %@", NSStringFromRange(ColumnRangeFromIndexPaths(source, end)));
+//    [view updateWidth:120 forRange:ColumnRangeFromIndexPaths(source, end)];
+    NSLog(@"range :: %@", NSStringFromRange(RowRangeFromIndexPaths(source, end)));
+    [view updateHeight:100 forRange:RowRangeFromIndexPaths(source, end)];
+    
+}
+
 - (CGFloat)lineSpacingInExcel:(YQExcelView *)view {
     return 10;
 }
 - (CGFloat)interitemSpacingInExcel:(YQExcelView *)view {
-    return 0;
+    return 10;
 }
 - (CGFloat)columnTitleHeightInExcel:(YQExcelView *)view {
     return 60;
@@ -76,5 +86,6 @@
 - (CGFloat)rowTitleWidthInExcel:(YQExcelView *)view {
     return 60;
 }
+
 
 @end

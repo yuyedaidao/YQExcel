@@ -39,4 +39,17 @@ NS_ASSUME_NONNULL_END
 @property (assign, nonatomic) NSInteger columnCount;
 @property (assign, nonatomic) NSInteger rowCount;
 
+- (CGFloat)heightForIndex:(NSInteger)index;
+- (void)setHeight:(CGFloat)height forIndex:(NSInteger)index;
+
+- (CGFloat)widthForIndex:(NSInteger)index;
+- (void)setWidth:(CGFloat)width forIndex:(NSInteger)index;
+
+- (CGFloat)originXForIndex:(NSInteger)index;
+- (void)setOriginX:(CGFloat)originX forIndex:(NSInteger)index;
+- (CGFloat)originYForIndex:(NSInteger)index;
+- (void)setOriginY:(CGFloat)originY forIndex:(NSInteger)index;
+
+- (void)invalidateCache;
+
 @end

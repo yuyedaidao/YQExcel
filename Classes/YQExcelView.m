@@ -121,8 +121,10 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
     }
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"点击了 %@", indexPath);
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(YQIndexPath *)indexPath {
+    if ([self.delegate respondsToSelector:@selector(excelView:didSelectItemAtIndexPath:)]) {
+        [self.delegate excelView:self didSelectItemAtIndexPath:indexPath];
+    }
 }
 
 #pragma mark action
@@ -135,7 +137,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
         self.coverView.frame = self.coverOriginalRect = cell.frame;
         [self.collectionView addSubview:self.coverView];
-        self.startIndexPath = indexPath;
+        self.endIndexPath = self.startIndexPath = indexPath;
     } else if (gesture.state == UIGestureRecognizerStateChanged) {
         YQIndexPath *indexPath = (YQIndexPath *)[self.collectionView indexPathForItemAtPoint:location];
         if (indexPath) {
@@ -163,10 +165,13 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
                     break;
             }
             self.endIndexPath = indexPath;
+            //判断一下位置,自动移动
+            
+            
         }
     } else if (gesture.state == UIGestureRecognizerStateEnded) {
-        if ([self.delegate respondsToSelector:@selector(excelView:willUnCoverItemsOfIndexPaths:)]) {
-            [self.delegate excelView:self willUnCoverItemsOfIndexPaths:[self indexPathsFrom:self.startIndexPath to:self.endIndexPath]];
+        if ([self.delegate respondsToSelector:@selector(excelView:willUnCoverItemsOfIndexPaths:source:end:)]) {
+            [self.delegate excelView:self willUnCoverItemsOfIndexPaths:[self indexPathsFrom:self.startIndexPath to:self.endIndexPath except:self.startIndexPath] source:self.startIndexPath end:self.endIndexPath];
         }
         [self.coverView removeFromSuperview];
     } else if (gesture.state == UIGestureRecognizerStateCancelled || gesture.state == UIGestureRecognizerStateFailed) {
@@ -177,14 +182,29 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
 }
 
 #pragma mark help
-- (NSArray<YQIndexPath *> *) indexPathsFrom:(YQIndexPath *)origin to:(YQIndexPath *)another {
-    NSInteger originX = origin.yqColumn;
-    NSInteger originY = origin.yqRow;
-    NSInteger endX = another.yqColumn;
-    NSInteger endY = another.yqRow;
+- (NSArray<YQIndexPath *> *) indexPathsFrom:(YQIndexPath *)origin to:(YQIndexPath *)another except:(YQIndexPath *)except{
+    NSInteger originX;
+    NSInteger originY;
+    NSInteger endX;
+    NSInteger endY;
+    if (origin.yqColumn < another.yqColumn) {
+        originX = origin.yqColumn;
+        endX = another.yqColumn;
+    } else {
+        originX = another.yqColumn;
+        endX = origin.yqColumn;
+    }
+    if (origin.yqRow < another.yqRow) {
+        originY = origin.yqRow;
+        endY = another.yqRow;
+    } else {
+        originY = another.yqRow;
+        endY = origin.yqRow;
+    }
     NSMutableArray *array = [NSMutableArray array];
     for (NSInteger i = originY ; i <= endY; i++) {
         for (NSInteger j = originX; j <= endX; j++) {
+            if (except.yqRow == i && except.yqColumn == j) continue;
             [array addObject:[YQIndexPath indexPathWithColumn:j row:i type:IndexPathTypeNormal referenceColumn:_layout.columnCount referenceRow:_layout.rowCount]];
         }
     }
@@ -194,8 +214,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
 #pragma mark override
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
-    
-    [self reloadData];
+    [self reset];
 }
 
 #pragma mark set&get
@@ -220,7 +239,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
     return [_collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
 }
 
-- (void)reloadData {
+- (void)reset {
     YQExcelCount count = [_dataSource itemCountInExcelView:self];
     self.layout.columnCount = count.column;
     self.layout.rowCount = count.row;
@@ -229,18 +248,50 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
     self.layout.columnTitleHeight = [self.delegate columnTitleHeightInExcel:self];
     self.layout.rowTitleWidth = [self.delegate rowTitleWidthInExcel:self];
     self.layout.itemMinimumSize = [self.delegate itemMinimumSize:self];
-    
+    [self.layout invalidateCache];
     [self.collectionView reloadData];
 }
 
-- (void)updateWidth:(CGFloat)width itemAtIndexPath:(YQIndexPath *)indexPath {
-//    NSAssert(indexPath.type == IndexPathTypeNormal, @"传入的IndexPath不正确");
-    if (width < self.layout.itemMinimumSize.width) {
-        
-    }
+- (void)reloadData {
+    [self.layout invalidateCache];
+    [self.layout invalidateLayout];
+    [self.collectionView reloadData];
 }
-- (void)updateHeight:(CGFloat)height itemAtIndexPath:(YQIndexPath *)indexPath {
 
+- (void)updateWidth:(CGFloat)width forRange:(NSRange)range {
+    NSUInteger end = range.location + range.length;
+    CGFloat _width = MAX(width, _layout.itemMinimumSize.width);
+    if (end < _layout.columnCount) {
+        [_layout setWidth:_width forIndex:range.location];
+        for (NSInteger i = range.location + 1; i < end; i++) {
+            [_layout setWidth:_width forIndex:i];
+            [_layout setOriginX:[_layout originXForIndex:i - 1] + _width + _layout.minimumInteritemSpacing forIndex:i];
+        }
+     
+        [_layout setOriginX:[_layout originXForIndex:end - 1] + _width + _layout.minimumInteritemSpacing forIndex:end];
+        for (NSInteger i = end + 1; i < _layout.columnCount; i++) {
+            [_layout setOriginX:[_layout originXForIndex:i - 1] + [_layout widthForIndex:i - 1]  + _layout.minimumInteritemSpacing forIndex:i];
+        }
+        [self reloadData];
+    }
+    
+}
+- (void)updateHeight:(CGFloat)height forRange:(NSRange)range {
+    NSUInteger end = range.location + range.length;
+    CGFloat _height = MAX(height, _layout.itemMinimumSize.height);
+    if (end < _layout.rowCount) {
+        [_layout setHeight:_height forIndex:range.location];
+        for (NSInteger i = range.location + 1; i < end; i++) {
+            [_layout setHeight:_height forIndex:i];
+            [_layout setOriginY:[_layout originYForIndex:i - 1] + _height  + _layout.minimumLineSpacing forIndex:i];
+        }
+        
+        [_layout setOriginY:[_layout originYForIndex:end - 1] + _height + _layout.minimumLineSpacing forIndex:end];
+        for (NSInteger i = end + 1; i < _layout.rowCount; i++) {
+            [_layout setOriginY:[_layout originYForIndex:i - 1] + [_layout heightForIndex:i - 1]  + _layout.minimumLineSpacing forIndex:i];
+        }
+        [self reloadData];
+    }
 }
 
 @end

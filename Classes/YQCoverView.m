@@ -21,7 +21,7 @@
     if (_edgeColor) {
         [_edgeColor setStroke];
     } else {
-        [UIColor colorWithRed:80 / 255.0f green:157 / 255.0f blue:234 / 255.0f alpha:1];
+        [[UIColor colorWithRed:80 / 255.0f green:157 / 255.0f blue:234 / 255.0f alpha:1] setStroke];
     }
     CGContextStrokePath(context);
 

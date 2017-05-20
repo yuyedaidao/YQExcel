@@ -22,6 +22,19 @@ UIKIT_STATIC_INLINE YQExcelCount YQExcelCountMake(NSInteger column, NSInteger ro
 }
 
 NS_ASSUME_NONNULL_BEGIN
+
+UIKIT_STATIC_INLINE NSRange ColumnRangeFromIndexPaths(YQIndexPath *one, YQIndexPath *another) {
+    NSInteger start = MIN(one.yqColumn, another.yqColumn);
+    NSInteger end = MAX(one.yqColumn, another.yqColumn);
+    return NSMakeRange(start, end - start + 1);
+}
+
+UIKIT_STATIC_INLINE NSRange RowRangeFromIndexPaths(YQIndexPath *one, YQIndexPath *another) {
+    NSInteger start = MIN(one.yqRow, another.yqRow);
+    NSInteger end = MAX(one.yqRow, another.yqRow);
+    return NSMakeRange(start, end - start + 1);
+}
+
 @class YQExcelView;
 @protocol YQExcelViewDataSource <NSObject>
 
@@ -41,7 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGFloat)columnTitleHeightInExcel:(YQExcelView *)view;
 - (CGFloat)rowTitleWidthInExcel:(YQExcelView *)view;
 
-- (void)excelView:(YQExcelView *)view willUnCoverItemsOfIndexPaths:(NSArray<YQIndexPath *> *)indexPaths;
+- (void)excelView:(YQExcelView *)view didSelectItemAtIndexPath:(YQIndexPath *)indexPath;
+- (void)excelView:(YQExcelView *)view willUnCoverItemsOfIndexPaths:(NSArray<YQIndexPath *> *)indexPaths source:(YQIndexPath *)source end:(YQIndexPath *)end;
 
 
 
@@ -58,9 +72,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof UICollectionViewCell *)dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath;
 - (void)registerClass:(nullable Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier;
 - (void)registerNib:(nullable UINib *)nib forCellWithReuseIdentifier:(NSString *)identifier;
+- (void)reset;
 - (void)reloadData;
-- (void)updateWidth:(CGFloat)width itemAtIndexPath:(YQIndexPath *)indexPath;
-- (void)updateHeight:(CGFloat)height itemAtIndexPath:(YQIndexPath *)indexPath;
+- (void)updateWidth:(CGFloat)width forRange:(NSRange)range;
+- (void)updateHeight:(CGFloat)height forRange:(NSRange)range;
 
 @end
 
