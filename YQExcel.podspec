@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = "用于私人项目的Excel,简单易用,注重效率, 做多写几个字,做到比summary的字符多"
 
-  s.homepage     = "http://EXAMPLE/YQExcel"
+  s.homepage     = "https://github.com/yuyedaidao/YQExcel"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
