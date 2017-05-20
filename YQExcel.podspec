@@ -24,8 +24,7 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  s.description  = <<-DESC 用于私人项目的Excel,简单易用,注重效率, 做多写几个字,做到比summary的字符多
-                   DESC
+  s.description  = "用于私人项目的Excel,简单易用,注重效率, 做多写几个字,做到比summary的字符多"
 
   s.homepage     = "http://EXAMPLE/YQExcel"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
