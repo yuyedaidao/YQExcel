@@ -55,9 +55,11 @@
     return !((self.yqRow ^ another.yqRow) || (self.yqColumn ^ another.yqColumn));
 }
 
+#ifdef DEBUG
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@: %p> {yqColumn: %ld, yqRow: %ld, type: %ld, item: %ld}", NSStringFromClass([self class]), self, self.yqColumn, self.yqRow, self.type, self.item];
 }
+#endif
 
 @end
 
@@ -88,7 +90,9 @@
 
 - (void)prepareLayout {
     [super prepareLayout];
-    _contentSize = CGSizeMake(originXs[_columnCount - 1] + widths[_columnCount - 1], originYs[_rowCount - 1] + heights[_rowCount - 1]);
+    if (isMalloced) {
+        _contentSize = CGSizeMake(originXs[_columnCount - 1] + widths[_columnCount - 1], originYs[_rowCount - 1] + heights[_rowCount - 1]);
+    }
 }
 
 - (CGSize)collectionViewContentSize {
@@ -128,7 +132,7 @@
 }
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
-    
+    if (!isMalloced) return nil;
     //先确定边界
     CGFloat originY = rect.origin.y;
     NSInteger startRow = ceil((originY - _columnTitleHeight) / (_itemMinimumSize.height + self.minimumLineSpacing)) - 1;

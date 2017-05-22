@@ -8,11 +8,8 @@
 
 #import "YQExcelView.h"
 #import "YQCoverView.h"
-//static CGFloat const kVelocity = 10.0f;
 
-//CGRect CGRectFromIndexPaths(YQIndexPath *start, YQIndexPath *end) {
-//    return CGRectMake(start.yqColumn, start.yqRow, (CGFloat)end.yqColumn - (CGFloat)start.yqColumn, (CGFloat)end.yqRow - (CGFloat)start.yqRow);
-//}
+
 
 typedef NS_ENUM(NSUInteger, YQIndexPathDirection) {
     YQIPDirectionLeft,
@@ -83,6 +80,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
 - (void)commonInit {
     _layout = [[YQExcelViewLayout alloc] init];
     _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_layout];
+    _collectionView.backgroundColor = self.backgroundColor;
     self.pressGesture = ({
         UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureAction:)];
         [_collectionView addGestureRecognizer:gesture];
@@ -214,7 +212,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
 #pragma mark override
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
-    [self reset];
+    [self reloadData];
 }
 
 #pragma mark set&get
@@ -224,6 +222,11 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         _coverView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.3];
     }
     return _coverView;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
+    _collectionView.backgroundColor = backgroundColor;
 }
 
 #pragma mark public
@@ -239,23 +242,19 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
     return [_collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
 }
 
-- (void)reset {
-    YQExcelCount count = [_dataSource itemCountInExcelView:self];
-    self.layout.columnCount = count.column;
-    self.layout.rowCount = count.row;
-    self.layout.minimumLineSpacing = [self.delegate lineSpacingInExcel:self];
-    self.layout.minimumInteritemSpacing = [self.delegate interitemSpacingInExcel:self];
-    self.layout.columnTitleHeight = [self.delegate columnTitleHeightInExcel:self];
-    self.layout.rowTitleWidth = [self.delegate rowTitleWidthInExcel:self];
-    self.layout.itemMinimumSize = [self.delegate itemMinimumSize:self];
-    [self.layout invalidateCache];
-    [self.collectionView reloadData];
-}
-
 - (void)reloadData {
-    [self.layout invalidateCache];
-    [self.layout invalidateLayout];
-    [self.collectionView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        YQExcelCount count = [_dataSource itemCountInExcelView:self];
+        self.layout.columnCount = count.column;
+        self.layout.rowCount = count.row;
+        self.layout.minimumLineSpacing = [self.delegate respondsToSelector:@selector(lineSpacingInExcel:)] ? [self.delegate lineSpacingInExcel:self] : 0;
+        self.layout.minimumInteritemSpacing = [self.delegate respondsToSelector:@selector(interitemSpacingInExcel:)] ? [self.delegate interitemSpacingInExcel:self] : 0;
+        self.layout.columnTitleHeight = [self.delegate respondsToSelector:@selector(columnTitleHeightInExcel:)] ? [self.delegate columnTitleHeightInExcel:self] : 30;
+        self.layout.rowTitleWidth = [self.delegate respondsToSelector:@selector(rowTitleWidthInExcel:)] ? [self.delegate rowTitleWidthInExcel:self] : 30;
+        self.layout.itemMinimumSize = [self.delegate respondsToSelector:@selector(itemMinimumSize:)] ? [self.delegate itemMinimumSize:self] : CGSizeZero;
+        [self.layout invalidateCache];
+        [self.collectionView reloadData];
+    });
 }
 
 - (void)updateWidth:(CGFloat)width forRange:(NSRange)range {

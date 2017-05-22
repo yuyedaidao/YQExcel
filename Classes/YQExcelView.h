@@ -72,7 +72,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof UICollectionViewCell *)dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath;
 - (void)registerClass:(nullable Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier;
 - (void)registerNib:(nullable UINib *)nib forCellWithReuseIdentifier:(NSString *)identifier;
-- (void)reset;
 - (void)reloadData;
 - (void)updateWidth:(CGFloat)width forRange:(NSRange)range;
 - (void)updateHeight:(CGFloat)height forRange:(NSRange)range;
