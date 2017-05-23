@@ -49,11 +49,13 @@ UIKIT_STATIC_INLINE NSRange RowRangeFromIndexPaths(YQIndexPath *one, YQIndexPath
 - (CGSize)itemMinimumSize:(YQExcelView *)view;
 - (__kindof UICollectionViewCell *)excelView:(YQExcelView *)view columnTitleViewAtIndexPath:(YQIndexPath *)indexPath;
 - (__kindof UICollectionViewCell *)excelView:(YQExcelView *)view rowTitleViewAtIndexPath:(YQIndexPath *)indexPath;
-- (CGFloat)lineSpacingInExcel:(YQExcelView *)view;
-- (CGFloat)interitemSpacingInExcel:(YQExcelView *)view;
+
 - (CGFloat)columnTitleHeightInExcel:(YQExcelView *)view;
 - (CGFloat)rowTitleWidthInExcel:(YQExcelView *)view;
 
+@optional
+- (CGFloat)lineSpacingInExcel:(YQExcelView *)view;
+- (CGFloat)interitemSpacingInExcel:(YQExcelView *)view;
 - (void)excelView:(YQExcelView *)view didSelectItemAtIndexPath:(YQIndexPath *)indexPath;
 - (void)excelView:(YQExcelView *)view willUnCoverItemsOfIndexPaths:(NSArray<YQIndexPath *> *)indexPaths source:(YQIndexPath *)source end:(YQIndexPath *)end;
 

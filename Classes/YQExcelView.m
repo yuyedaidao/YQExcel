@@ -163,8 +163,6 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
                     break;
             }
             self.endIndexPath = indexPath;
-            //判断一下位置,自动移动
-            
             
         }
     } else if (gesture.state == UIGestureRecognizerStateEnded) {
