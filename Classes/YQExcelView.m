@@ -51,6 +51,9 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
 @property (strong, nonatomic) YQIndexPath *endIndexPath;
 @property (strong, nonatomic) YQCoverView *coverView;
 @property (assign, nonatomic) CGRect coverOriginalRect;
+
+@property (strong, nonatomic) CADisplayLink *displayLink;
+
 @end
 
 @implementation YQExcelView
@@ -98,6 +101,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     
+
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -136,6 +140,14 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         self.coverView.frame = self.coverOriginalRect = cell.frame;
         [self.collectionView addSubview:self.coverView];
         self.endIndexPath = self.startIndexPath = indexPath;
+        
+        self.displayLink = ({
+            CADisplayLink *link  = [CADisplayLink displayLinkWithTarget:self selector:@selector(moveContentAction:)];
+            link.paused = YES;
+            [link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+            link;
+        });
+        
     } else if (gesture.state == UIGestureRecognizerStateChanged) {
         YQIndexPath *indexPath = (YQIndexPath *)[self.collectionView indexPathForItemAtPoint:location];
         if (indexPath) {
@@ -172,14 +184,21 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
             [self.delegate excelView:self willUnCoverItemsOfIndexPaths:[self indexPathsFrom:self.startIndexPath to:self.endIndexPath except:self.startIndexPath] source:self.startIndexPath end:self.endIndexPath];
         }
         [self.coverView removeFromSuperview];
+        [_displayLink invalidate];
+        _displayLink = nil;
     } else if (gesture.state == UIGestureRecognizerStateCancelled || gesture.state == UIGestureRecognizerStateFailed) {
         [self.coverView removeFromSuperview];
+        [_displayLink invalidate];
+        _displayLink = nil;
     }
     
 
 }
 
 #pragma mark help
+- (void)moveContentAction:(id)sender {
+    
+}
 - (NSArray<YQIndexPath *> *) indexPathsFrom:(YQIndexPath *)origin to:(YQIndexPath *)another except:(YQIndexPath *)except{
     NSInteger originX;
     NSInteger originY;
