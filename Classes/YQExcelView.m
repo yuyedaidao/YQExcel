@@ -9,7 +9,7 @@
 #import "YQExcelView.h"
 #import "YQCoverView.h"
 
-
+static CGFloat const kVelocity = 8.0f;
 
 typedef NS_ENUM(NSUInteger, YQIndexPathDirection) {
     YQIPDirectionLeft,
@@ -53,6 +53,8 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
 @property (assign, nonatomic) CGRect coverOriginalRect;
 
 @property (strong, nonatomic) CADisplayLink *displayLink;
+@property (assign, nonatomic) CGFloat xVelocityScale;
+@property (assign, nonatomic) CGFloat yVelocityScale;
 
 @end
 
@@ -143,7 +145,6 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         
         self.displayLink = ({
             CADisplayLink *link  = [CADisplayLink displayLinkWithTarget:self selector:@selector(moveContentAction:)];
-            link.paused = YES;
             [link addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
             link;
         });
@@ -176,7 +177,26 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
             }
             self.endIndexPath = indexPath;
             //判断一下位置,自动移动
+            CGPoint offset = self.collectionView.contentOffset;
             
+            CGFloat gestureMarginX = [UIScreen mainScreen].bounds.size.width * 0.25;
+            CGFloat gestureMarginY = [UIScreen mainScreen].bounds.size.height * 0.25;
+            
+            if (location.x - offset.x < gestureMarginX) {
+                self.xVelocityScale = (location.x - (offset.x + gestureMarginX)) / gestureMarginX;
+            } else if(offset.x + CGRectGetWidth(self.collectionView.bounds) - location.x < gestureMarginX){
+                self.xVelocityScale = (location.x - (offset.x + CGRectGetWidth(self.collectionView.bounds) - gestureMarginX)) / gestureMarginX;
+            } else {
+                self.xVelocityScale = 0;
+            }
+            
+            if (location.y - offset.y < gestureMarginX) {
+                self.yVelocityScale = (location.y - (offset.y + gestureMarginX)) / gestureMarginY;
+            } else if(offset.y + CGRectGetHeight(self.collectionView.bounds) - location.y < gestureMarginX){
+                self.yVelocityScale = (location.y - (offset.y + CGRectGetHeight(self.collectionView.bounds) - gestureMarginY)) / gestureMarginY;
+            } else {
+                self.yVelocityScale = 0;
+            }
             
         }
     } else if (gesture.state == UIGestureRecognizerStateEnded) {
@@ -197,7 +217,26 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
 
 #pragma mark help
 - (void)moveContentAction:(id)sender {
-    
+    static CGFloat moveX = 0;
+    static CGFloat moveY = 0;
+    CGPoint offset = self.collectionView.contentOffset;
+    BOOL shouldMove = NO;
+    moveX += _xVelocityScale * kVelocity;
+    moveY += _yVelocityScale * kVelocity;
+    if (ABS(moveX) > 3) {
+        offset.x = MIN(MAX(offset.x + moveX, 0), self.collectionView.contentSize.width - CGRectGetWidth(self.collectionView.bounds));
+        shouldMove = YES;
+        moveX = 0;
+    }
+    if (ABS(moveY) > 3 ) {
+        offset.y = MIN(MAX(offset.y + moveY, 0), self.collectionView.contentSize.height - CGRectGetHeight(self.collectionView.bounds));
+        shouldMove = YES;
+        moveY = 0;
+    }
+    if (shouldMove) {
+        self.collectionView.contentOffset = offset;
+    }
+
 }
 - (NSArray<YQIndexPath *> *) indexPathsFrom:(YQIndexPath *)origin to:(YQIndexPath *)another except:(YQIndexPath *)except{
     NSInteger originX;
