@@ -73,20 +73,15 @@
 }
 
 @property (assign, nonatomic) CGSize contentSize;
-@property (assign, nonatomic) NSInteger startRow;
-@property (assign, nonatomic) NSInteger startColumn;
-//@property (strong, nonatomic) NSArray<UICollectionViewLayoutAttributes *> *cacheIndexPaths;
+@property (strong, nonatomic) NSArray<UICollectionViewLayoutAttributes *> *cachedColumnTitleAttributes;
+@property (strong, nonatomic) NSArray<UICollectionViewLayoutAttributes *> *cachedRowTitleAttributes;
+@property (strong, nonatomic) NSArray<UICollectionViewLayoutAttributes *> *cachedAttributes;
+@property (assign, nonatomic) CGRect cachedRect;
+
 @end
 
 @implementation YQExcelViewLayout
 
-- (instancetype)init {
-    if (self = [super init]) {
-        _startColumn = NSIntegerMin;
-        _startRow = NSIntegerMin;
-    }
-    return self;
-}
 
 - (void)prepareLayout {
     [super prepareLayout];
@@ -132,7 +127,32 @@
 }
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
+    
     if (!isMalloced) return nil;
+    NSMutableArray<UICollectionViewLayoutAttributes *> *array = [NSMutableArray array];
+    if (CGRectEqualToRect(_cachedRect, rect)) {
+        if (_cachedColumnTitleAttributes) {
+            [_cachedColumnTitleAttributes enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                CGRect frame = obj.frame;
+                frame.origin.y = self.collectionView.contentOffset.y;
+                obj.frame = frame;
+            }];
+            [array addObjectsFromArray:_cachedColumnTitleAttributes];
+        }
+        if (_cachedRowTitleAttributes) {
+            [_cachedRowTitleAttributes enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                CGRect frame = obj.frame;
+                frame.origin.x = self.collectionView.contentOffset.x;
+                obj.frame = frame;
+            }];
+            [array addObjectsFromArray:_cachedRowTitleAttributes];
+        }
+        [array addObjectsFromArray:_cachedAttributes];
+        if (array.count) {
+            return array;
+        }
+    }
+    
     //先确定边界
     CGFloat originY = rect.origin.y;
     NSInteger startRow = ceil((originY - _columnTitleHeight) / (_itemMinimumSize.height + self.minimumLineSpacing)) - 1;
@@ -156,14 +176,7 @@
         }
     }
     startColumn = MAX(startColumn, 0);
-//    if (startColumn == _startColumn && startRow == _startRow) {
-//        if (_cacheIndexPaths) {
-//            NSLog(@"----");
-//            return _cacheIndexPaths;
-//        }
-//    }
-    _startColumn = startColumn;
-    _startRow = startRow;
+    
     //一般column少,取这个的最大值
     NSInteger endColumn = startColumn;
     CGFloat maxX = CGRectGetMaxX(rect);
@@ -178,22 +191,25 @@
     endColumn = MIN(endColumn, _columnCount - 1);
     NSInteger column = MAX(startColumn, 1);
     
-    NSMutableArray<UICollectionViewLayoutAttributes *> *array = [NSMutableArray array];
+    NSMutableArray *columnTitleArray = [NSMutableArray array];
     YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:0 row:0 type:IndexPathTypeColumnTitle referenceColumn:_columnCount referenceRow:_rowCount];
-    [array addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
+//    [array addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
+    [columnTitleArray addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
     while (column <= endColumn + 1) {
         YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:column row:0 type:IndexPathTypeColumnTitle referenceColumn:_columnCount referenceRow:_rowCount];
-        [array addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
+//        [array addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
+        [columnTitleArray addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
         column++;
     }
-    
+    NSMutableArray *rowTitleArray = [NSMutableArray array];
     NSInteger row = startRow;
     while (row < _rowCount) {
         if (originYs[row] > maxY) {
             break;
         } else {
             YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:0 row:row type:IndexPathTypeRowTitle referenceColumn:_columnCount referenceRow:_rowCount];
-            [array addObject:[self layoutAttributesForRowTitleAtIndexPath:indexPath]];
+//            [array addObject:[self layoutAttributesForRowTitleAtIndexPath:indexPath]];
+            [rowTitleArray addObject:[self layoutAttributesForRowTitleAtIndexPath:indexPath]];
             for (NSInteger column = startColumn; column <= endColumn; column++) {
                 YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:column row:row type:IndexPathTypeNormal referenceColumn:_columnCount referenceRow:_rowCount];
                 [array addObject:[self layoutAttributesForItemAtIndexPath:indexPath]];
@@ -201,7 +217,12 @@
         }
         row++;
     }
-//    self.cacheIndexPaths = array;
+    self.cachedColumnTitleAttributes = columnTitleArray;
+    self.cachedRowTitleAttributes = rowTitleArray;
+    self.cachedAttributes = [array mutableCopy];
+    [array addObjectsFromArray:columnTitleArray];
+    [array addObjectsFromArray:rowTitleArray];
+    
     return array;
 }
 
@@ -272,8 +293,7 @@
 #pragma mark public
 
 - (void)invalidateCache {
-    _startColumn = NSIntegerMin;
-    _startRow = NSIntegerMin;
+    _cachedRect = CGRectZero;
 }
 
 @end

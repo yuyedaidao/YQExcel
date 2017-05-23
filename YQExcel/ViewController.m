@@ -30,7 +30,7 @@
     self.excelView.delegate = self;
     self.excelView.dataSource = self;
     
-    [self.excelView reset];
+    [self.excelView reloadData];
     
 
 }
