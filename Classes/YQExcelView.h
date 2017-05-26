@@ -78,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)reloadData;
 - (void)updateWidth:(CGFloat)width forRange:(NSRange)range;
 - (void)updateHeight:(CGFloat)height forRange:(NSRange)range;
-
+- (__kindof UICollectionViewCell *)itemForIndexPath:(YQIndexPath *)indexPath;
 @end
 
 NS_ASSUME_NONNULL_END

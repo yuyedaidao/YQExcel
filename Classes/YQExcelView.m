@@ -125,6 +125,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
     }
 }
 
+
 #pragma mark action
 
 - (void)longPressGestureAction:(UILongPressGestureRecognizer *)gesture {
@@ -238,6 +239,10 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
 
 - (void)registerClass:(Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier {
     return [_collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
+}
+
+- (__kindof UICollectionViewCell *)itemForIndexPath:(YQIndexPath *)indexPath {
+    return [_collectionView cellForItemAtIndexPath:indexPath];
 }
 
 - (void)reloadData {
