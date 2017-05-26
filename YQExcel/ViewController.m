@@ -55,6 +55,15 @@
 - (CGSize)itemMinimumSize:(YQExcelView *)view {
     return CGSizeMake(80, 60);
 }
+
+- (CGFloat)excelView:(YQExcelView *)view widthForColumn:(NSInteger)column {
+    return  (column + 1) * 20;
+}
+
+- (CGFloat)excelView:(YQExcelView *)view heightForRow:(NSInteger)row {
+    return  (row + 1) * 20;
+}
+
 - (__kindof UICollectionViewCell *)excelView:(YQExcelView *)view columnTitleViewAtIndexPath:(nonnull YQIndexPath *)indexPath {
     ColumnTitleCollectionCell *cell = [view dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ColumnTitleCollectionCell class]) forIndexPath:indexPath];
     cell.titleLabel.text = [@(indexPath.yqColumn - 1) stringValue];

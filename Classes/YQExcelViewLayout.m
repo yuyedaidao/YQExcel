@@ -156,18 +156,17 @@
     //先确定边界
     CGFloat originY = rect.origin.y;
     NSInteger startRow = ceil((originY - _columnTitleHeight) / (_itemMinimumSize.height + self.minimumLineSpacing)) - 1;
-    startRow = MAX(startRow, 0);
-    while (startRow >= 0) {
+    startRow = MIN(MAX(startRow, 0), _rowCount - 1);
+    while (startRow > 0) {
         if (originYs[startRow] > originY) {
             startRow--;
         } else {
             break;
         }
     }
-    startRow = MAX(startRow, 0);
     CGFloat originX = rect.origin.x;
     NSInteger startColumn = ceil((originX - _rowTitleWidth) / (_itemMinimumSize.width + self.minimumInteritemSpacing)) - 1;
-    startColumn = MAX(startColumn, 0);
+    startColumn = MIN(MAX(startColumn, 0), _columnCount - 1);
     while (startColumn >= 0) {
         if (originXs[startColumn] > originX) {
             startColumn--;
@@ -181,7 +180,7 @@
     NSInteger endColumn = startColumn;
     CGFloat maxX = CGRectGetMaxX(rect);
     CGFloat maxY = CGRectGetMaxY(rect);
-    while (endColumn < _columnCount) {
+    while (endColumn < _columnCount - 1) {
         if (originXs[endColumn] < maxX) {
             endColumn++;
         } else {
@@ -190,25 +189,22 @@
     }
     endColumn = MIN(endColumn, _columnCount - 1);
     NSInteger column = MAX(startColumn, 1);
-    
     NSMutableArray *columnTitleArray = [NSMutableArray array];
     YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:0 row:0 type:IndexPathTypeColumnTitle referenceColumn:_columnCount referenceRow:_rowCount];
-//    [array addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
     [columnTitleArray addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
     while (column <= endColumn + 1) {
         YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:column row:0 type:IndexPathTypeColumnTitle referenceColumn:_columnCount referenceRow:_rowCount];
-//        [array addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
         [columnTitleArray addObject:[self layoutAttributesForColumnTitleAtIndexPath:indexPath]];
         column++;
     }
     NSMutableArray *rowTitleArray = [NSMutableArray array];
     NSInteger row = startRow;
+    NSLog(@"startRow: %ld", startRow);
     while (row < _rowCount) {
         if (originYs[row] > maxY) {
             break;
         } else {
             YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:0 row:row type:IndexPathTypeRowTitle referenceColumn:_columnCount referenceRow:_rowCount];
-//            [array addObject:[self layoutAttributesForRowTitleAtIndexPath:indexPath]];
             [rowTitleArray addObject:[self layoutAttributesForRowTitleAtIndexPath:indexPath]];
             for (NSInteger column = startColumn; column <= endColumn; column++) {
                 YQIndexPath *indexPath = [YQIndexPath indexPathWithColumn:column row:row type:IndexPathTypeNormal referenceColumn:_columnCount referenceRow:_rowCount];

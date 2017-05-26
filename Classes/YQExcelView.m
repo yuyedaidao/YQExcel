@@ -249,7 +249,25 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         self.layout.minimumInteritemSpacing = [self.delegate respondsToSelector:@selector(interitemSpacingInExcel:)] ? [self.delegate interitemSpacingInExcel:self] : 0;
         self.layout.columnTitleHeight = [self.delegate respondsToSelector:@selector(columnTitleHeightInExcel:)] ? [self.delegate columnTitleHeightInExcel:self] : 30;
         self.layout.rowTitleWidth = [self.delegate respondsToSelector:@selector(rowTitleWidthInExcel:)] ? [self.delegate rowTitleWidthInExcel:self] : 30;
-        self.layout.itemMinimumSize = [self.delegate respondsToSelector:@selector(itemMinimumSize:)] ? [self.delegate itemMinimumSize:self] : CGSizeZero;
+        self.layout.itemMinimumSize = [self.delegate respondsToSelector:@selector(itemMinimumSize:)] ? [self.delegate itemMinimumSize:self] : CGSizeMake(40, 20);
+        if ([self.delegate respondsToSelector:@selector(excelView:widthForColumn:)]) {
+            CGFloat originX = _layout.rowTitleWidth;
+            for (NSInteger i = 0; i < count.column; i++) {
+                CGFloat width = MAX([self.delegate excelView:self widthForColumn:i], _layout.itemMinimumSize.width);
+                [_layout setWidth:width forIndex:i];
+                [_layout setOriginX:originX forIndex:i];
+                originX += width + _layout.minimumInteritemSpacing;
+            }
+        }
+        if ([self.delegate respondsToSelector:@selector(excelView:heightForRow:)]) {
+            CGFloat originY = _layout.columnTitleHeight;
+            for (NSInteger i = 0; i < count.row; i++) {
+                CGFloat height = MAX([self.delegate excelView:self heightForRow:i], _layout.itemMinimumSize.height);
+                [_layout setHeight:height forIndex:i];
+                [_layout setOriginY:originY forIndex:i];
+                originY += height + _layout.minimumLineSpacing;
+            }
+        }
         [self.layout invalidateCache];
         [self.collectionView reloadData];
     });
@@ -269,7 +287,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         for (NSInteger i = end + 1; i < _layout.columnCount; i++) {
             [_layout setOriginX:[_layout originXForIndex:i - 1] + [_layout widthForIndex:i - 1]  + _layout.minimumInteritemSpacing forIndex:i];
         }
-        [self reloadData];
+        [self.collectionView reloadData];
     }
     
 }
@@ -287,7 +305,7 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         for (NSInteger i = end + 1; i < _layout.rowCount; i++) {
             [_layout setOriginY:[_layout originYForIndex:i - 1] + [_layout heightForIndex:i - 1]  + _layout.minimumLineSpacing forIndex:i];
         }
-        [self reloadData];
+        [self.collectionView reloadData];
     }
 }
 
