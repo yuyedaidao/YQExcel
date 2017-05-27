@@ -79,6 +79,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateWidth:(CGFloat)width forRange:(NSRange)range;
 - (void)updateHeight:(CGFloat)height forRange:(NSRange)range;
 - (__kindof UICollectionViewCell *)itemForIndexPath:(YQIndexPath *)indexPath;
+
+/**
+ 调用updateWidth:forRange: 或者updateHeight:forRange:需调用此方法刷新数据
+ */
+- (void)endUpdateItems;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -292,7 +292,6 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         for (NSInteger i = end + 1; i < _layout.columnCount; i++) {
             [_layout setOriginX:[_layout originXForIndex:i - 1] + [_layout widthForIndex:i - 1]  + _layout.minimumInteritemSpacing forIndex:i];
         }
-        [self.collectionView reloadData];
     }
     
 }
@@ -310,8 +309,11 @@ UIKIT_STATIC_INLINE YQIndexPathDirection YQIndexPathGetDirection(YQIndexPath *in
         for (NSInteger i = end + 1; i < _layout.rowCount; i++) {
             [_layout setOriginY:[_layout originYForIndex:i - 1] + [_layout heightForIndex:i - 1]  + _layout.minimumLineSpacing forIndex:i];
         }
-        [self.collectionView reloadData];
     }
+}
+
+- (void)endUpdateItems {
+    [self.collectionView reloadData];
 }
 
 @end
